@@ -2,6 +2,7 @@ import SvgIcon from '@/components/base/SvgIcon';
 import { IMAGE_FALLBACK } from '@/constants/images.constants';
 import { dict } from '@/services/i18nRuntime';
 import { isBase64Image } from '@/utils/appDevUtils';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { Button, Image, Tooltip } from 'antd';
 import React from 'react';
 import styles from './index.less';
@@ -32,7 +33,7 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
   //如果是相对地址就可
   let _imageUrl = imageUrl;
   if (_imageUrl.startsWith('/')) {
-    _imageUrl = `${process.env.BASE_URL}${_imageUrl}`;
+    _imageUrl = withBaseUrl(_imageUrl);
   }
   return (
     <div className={styles.imagePreviewContainer}>

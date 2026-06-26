@@ -8,6 +8,7 @@ import {
   isPreviewableFile,
   processImageContent,
 } from '@/utils/appDevUtils';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 // Button, Spin 已移除，使用 AppDevEmptyState 组件替代
 import React, { useMemo } from 'react';
 import { type DesignViewerRef } from '../DesignViewer';
@@ -144,9 +145,7 @@ const ContentViewer: React.FC<ContentViewerProps> = ({
         ref={previewRef}
         projectInfo={projectInfo}
         refreshProjectInfo={refreshProjectInfo}
-        devServerUrl={
-          devServerUrl ? `${process.env.BASE_URL}${devServerUrl}` : undefined
-        }
+        devServerUrl={devServerUrl ? withBaseUrl(devServerUrl) : undefined}
         isStarting={isStarting}
         isDeveloping={Boolean(
           isChatLoading && showDevelopingOverlayDuringAgent,

@@ -47,6 +47,12 @@ In the main local service, configure one or more Agent Computer deployment addre
 
 [Installation Documentation](https://nuwax.com/deploy.html)
 
+#### Frontend single-container runtime-config deployment
+
+If you want to deploy the `nuwax` frontend as a standalone Nginx container and switch backend endpoints through runtime environment variables, see:
+
+- [Single-container runtime-config deployment guide](docs/en/single-container-runtime-config.md)
+
 #### Agent Computer (Sandbox) Deployment Guide
 
 You can deploy Agent Computer services on multiple different servers, achieving distributed agent sandbox capabilities through configuration.
@@ -311,7 +317,7 @@ Join the Nuwax AI Agent Platform community for technical support and latest upda
 ### Community Channels
 
 | Channel | Description |
-|---------|-------------|
+| --- | --- |
 | **GitHub Issues** | [Submit issues](https://github.com/nuwax-ai/nuwax/issues) |
 | **WeChat Group** | Add assistant `nuwax-ai` |
 | **QQ Group** | Group ID: `1041169423` |

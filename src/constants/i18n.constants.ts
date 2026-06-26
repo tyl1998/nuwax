@@ -8,7 +8,7 @@ import { ZH_CN } from '@/locales/i18n/zh-CN';
 import { ZH_HK } from '@/locales/i18n/zh-HK';
 import { ZH_TW } from '@/locales/i18n/zh-TW';
 
-export const DEFAULT_I18N_LANG = 'en-us';
+export const DEFAULT_I18N_LANG = 'zh-cn';
 
 export const I18N_STORAGE_KEYS = {
   ACTIVE_LANG: 'umi_locale',

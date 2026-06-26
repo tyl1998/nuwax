@@ -67,6 +67,7 @@ import eventBus from '@/utils/eventBus';
 import { updateFilesListContent, updateFilesListName } from '@/utils/fileTree';
 import { checkFileSizeExceedLimit } from '@/utils/index';
 import { jumpToPageDevelop } from '@/utils/router';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Form, message as messageAntd } from 'antd';
 import classNames from 'classnames';
@@ -463,7 +464,7 @@ const Chat: React.FC = () => {
       // 自动触发预览
       showPagePreview({
         name: t('PC.Pages.Chat.pagePreview'),
-        uri: process.env.BASE_URL + agent?.pageHomeIndex,
+        uri: withBaseUrl(agent?.pageHomeIndex || ''),
         params: {},
         executeId: '',
       });

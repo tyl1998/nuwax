@@ -4,6 +4,7 @@ import { dict } from '@/services/i18nRuntime';
 import { TableTabsEnum } from '@/types/enums/dataTable';
 import { FileType } from '@/types/interfaces/common';
 import { TableOperationBarProps } from '@/types/interfaces/dataTable';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import {
   ClearOutlined,
   DownloadOutlined,
@@ -108,7 +109,9 @@ const TableOperationBar: React.FC<TableOperationBarProps> = ({
               disabled={importLoading}
               accept={'.xlsx,.xls'}
               onChange={onChangeFile}
-              action={`${process.env.BASE_URL}/api/compose/db/table/importExcel/${tableId}`}
+              action={withBaseUrl(
+                `/api/compose/db/table/importExcel/${tableId}`,
+              )}
               headers={{
                 Authorization: `Bearer ${
                   localStorage.getItem(ACCESS_TOKEN) || ''

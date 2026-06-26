@@ -1,3 +1,4 @@
+import { parseXmindFile } from '@/utils/xmindParser';
 import {
   CloudDownloadOutlined,
   CodeOutlined,
@@ -10,12 +11,15 @@ import {
   FileWordOutlined,
   Html5Outlined,
   LeftOutlined,
+  MinusOutlined,
   PlayCircleOutlined,
+  PlusOutlined,
   ReloadOutlined,
   RightOutlined,
   SoundOutlined,
 } from '@ant-design/icons';
 import { Alert, Button, Spin, Tooltip } from 'antd';
+import { Markmap } from 'markmap-view';
 import React, {
   useCallback,
   useEffect,
@@ -48,6 +52,7 @@ export type VideoType = 'video';
 export type HtmlType = 'html';
 export type MarkdownType = 'markdown';
 export type TextType = 'text';
+export type XmindType = 'xmind';
 export type UnsupportedType = 'unsupported';
 
 export type FileType =
@@ -58,6 +63,7 @@ export type FileType =
   | HtmlType
   | MarkdownType
   | TextType
+  | XmindType
   | UnsupportedType;
 
 export interface FilePreviewProps {
@@ -103,6 +109,7 @@ const EXTENSION_MAP: Record<string, FileType> = {
   pptx: 'pptx',
   ppt: 'pptx',
   pdf: 'pdf',
+  xmind: 'xmind',
   // Images
   jpg: 'image',
   jpeg: 'image',
@@ -231,6 +238,8 @@ const getFileIcon = (type: FileType, size = 48) => {
       return <FileTextOutlined style={{ ...iconStyle, color: '#083fa1' }} />;
     case 'text':
       return <CodeOutlined style={{ ...iconStyle, color: '#52c41a' }} />;
+    case 'xmind':
+      return <FileOutlined style={{ ...iconStyle, color: '#1a1a2e' }} />;
     default:
       return <FileOutlined style={{ ...iconStyle, color: '#bfbfbf' }} />;
   }
@@ -330,6 +339,60 @@ const FilePreview: React.FC<FilePreviewProps> = ({
     useState<boolean>(false);
   // 控制 Markdown 实际可见性：
   // 不使用 callback ref 返回清理函数（React 会告警），改由 effect 管理显示时机
+
+  // 缩放状态
+  const [scale, setScale] = useState(1);
+  const SCALE_MIN = 0.25;
+  const SCALE_MAX = 3;
+  const SCALE_STEP = 0.15;
+
+  const handleZoomIn = useCallback(() => {
+    setScale((prev) => Math.min(prev + SCALE_STEP, SCALE_MAX));
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    setScale((prev) => Math.max(prev - SCALE_STEP, SCALE_MIN));
+  }, []);
+
+  const handleZoomReset = useCallback(() => {
+    setScale(1);
+  }, []);
+
+  // Ctrl+滚轮缩放
+  useEffect(() => {
+    const container = containerRef.current?.parentElement;
+    if (!container) return;
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -SCALE_STEP : SCALE_STEP;
+        setScale((prev) =>
+          Math.max(SCALE_MIN, Math.min(SCALE_MAX, prev + delta)),
+        );
+      }
+    };
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => container.removeEventListener('wheel', handleWheel);
+  }, []);
+
+  // 键盘快捷键：Ctrl+加号放大，Ctrl+减号缩小，Ctrl+0重置
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        handleZoomIn();
+      } else if (e.key === '-') {
+        e.preventDefault();
+        handleZoomOut();
+      } else if (e.key === '0') {
+        e.preventDefault();
+        handleZoomReset();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleZoomIn, handleZoomOut, handleZoomReset]);
   const [isMarkdownVisible, setIsMarkdownVisible] = useState<boolean>(false);
 
   const resolvedType = fileType || detectedType;
@@ -598,6 +661,171 @@ const FilePreview: React.FC<FilePreviewProps> = ({
           await previewer.preview(previewSrc);
           break;
         }
+        case 'xmind': {
+          if (typeof previewSrc === 'string') {
+            const response = await fetch(previewSrc);
+            previewSrc = await response.arrayBuffer();
+          }
+
+          const container = containerRef.current;
+          if (!container) throw new Error('Container not found');
+
+          container.innerHTML = '';
+
+          const svg = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'svg',
+          );
+          svg.style.width = '100%';
+          svg.style.height =
+            typeof height === 'number' ? `${height}px` : height || '100%';
+          container.appendChild(svg);
+
+          const root = await parseXmindFile(previewSrc);
+          const mm = Markmap.create(
+            svg,
+            {
+              maxWidth: 300,
+              initialExpandLevel: -1,
+              zoom: true,
+              pan: true,
+            } as any,
+            root,
+          );
+
+          const patchToggleButtons = () => {
+            const svgNode = mm.svg?.node?.();
+            if (!svgNode) return;
+            svgNode
+              .querySelectorAll('g.markmap-node > circle')
+              .forEach((circle: Element) => {
+                const g = circle.parentElement;
+                if (!g) return;
+                const existing = g.querySelector('.mm-toggle-text');
+                if (existing) existing.remove();
+                const cx = circle.getAttribute('cx') || '0';
+                const cy = circle.getAttribute('cy') || '0';
+                const fill = circle.getAttribute('fill') || '';
+                const isCollapsed =
+                  fill !== '#fff' &&
+                  fill !== 'var(--markmap-circle-open-bg)' &&
+                  fill !== 'transparent';
+                const text = document.createElementNS(
+                  'http://www.w3.org/2000/svg',
+                  'text',
+                );
+                text.setAttribute('class', 'mm-toggle-text');
+                text.setAttribute('x', cx);
+                text.setAttribute('y', cy);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'central');
+                text.setAttribute('font-size', '12px');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('fill', isCollapsed ? '#fff' : '#666');
+                text.setAttribute('pointer-events', 'none');
+                text.setAttribute('style', 'user-select:none');
+                text.textContent = isCollapsed ? '+' : '−';
+                g.appendChild(text);
+              });
+          };
+
+          const setAllFold = (node: any, fold: boolean) => {
+            node.payload = { ...node.payload, fold };
+            if (node.children?.length) {
+              node.children.forEach((child: any) => setAllFold(child, fold));
+            }
+          };
+
+          let menuEl: HTMLDivElement | null = null;
+          const removeMenu = () => {
+            if (menuEl) {
+              menuEl.remove();
+              menuEl = null;
+            }
+          };
+
+          const handleContextMenu = (e: MouseEvent) => {
+            e.preventDefault();
+            removeMenu();
+
+            const menu = document.createElement('div');
+            menu.className = 'mm-context-menu';
+            menu.setAttribute(
+              'style',
+              [
+                'position:fixed',
+                `left:${e.clientX}px`,
+                `top:${e.clientY}px`,
+                'background:#fff',
+                'border:1px solid #e8e8e8',
+                'border-radius:6px',
+                'box-shadow:0 4px 12px rgba(0,0,0,.12)',
+                'padding:4px 0',
+                'z-index:9999',
+                'min-width:140px',
+                'font-size:13px',
+                'font-family:-apple-system,BlinkMacSystemFont,sans-serif',
+              ].join(';'),
+            );
+
+            const makeItem = (label: string, onClick: () => void) => {
+              const item = document.createElement('div');
+              item.setAttribute(
+                'style',
+                'padding:6px 16px;cursor:pointer;color:#333;white-space:nowrap',
+              );
+              item.textContent = label;
+              item.onmouseenter = () => (item.style.background = '#f5f5f5');
+              item.onmouseleave = () => (item.style.background = 'transparent');
+              item.onclick = () => {
+                removeMenu();
+                onClick();
+              };
+              return item;
+            };
+
+            menu.appendChild(
+              makeItem('展开所有子节点', () => {
+                setAllFold(root, false);
+                (mm as any).options.initialExpandLevel = -1;
+                mm.setData(root);
+                mm.renderData().then(patchToggleButtons);
+              }),
+            );
+            menu.appendChild(
+              makeItem('收缩所有子节点', () => {
+                setAllFold(root, true);
+                (mm as any).options.initialExpandLevel = 0;
+                mm.setData(root);
+                mm.renderData().then(patchToggleButtons);
+              }),
+            );
+
+            document.body.appendChild(menu);
+            menuEl = menu;
+          };
+
+          svg.addEventListener('contextmenu', handleContextMenu);
+          document.addEventListener('click', removeMenu, true);
+
+          const originalRenderData = mm.renderData.bind(mm);
+          mm.renderData = async (...args: any[]) => {
+            await originalRenderData(...args);
+            patchToggleButtons();
+          };
+          patchToggleButtons();
+
+          previewer = {
+            destroy: () => {
+              svg.removeEventListener('contextmenu', handleContextMenu);
+              document.removeEventListener('click', removeMenu, true);
+              removeMenu();
+              mm.destroy();
+              container.innerHTML = '';
+            },
+          };
+          break;
+        }
       }
 
       previewerRef.current = previewer;
@@ -664,7 +892,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({
         if (
           status === 'success' &&
           resolvedType &&
-          ['pptx', 'xlsx', 'pdf', 'docx'].includes(resolvedType)
+          ['pptx', 'xlsx', 'pdf', 'docx', 'xmind'].includes(resolvedType)
         ) {
           lastSizeRef.current = { width, height };
           initPreview();
@@ -888,10 +1116,12 @@ const FilePreview: React.FC<FilePreviewProps> = ({
   };
 
   // 判断是否需要滚动支持（文档类型需要滚动，Excel 除外，它有自己的滚动条）
-  const needsScroll = ['docx', 'pdf', 'pptx'].includes(resolvedType || '');
+  const needsScroll = ['docx', 'pdf', 'pptx', 'xmind'].includes(
+    resolvedType || '',
+  );
 
   // 是否应该显示内容（占据布局空间）
-  const shouldShowContent = ['docx', 'xlsx', 'pdf', 'pptx'].includes(
+  const shouldShowContent = ['docx', 'xlsx', 'pdf', 'pptx', 'xmind'].includes(
     resolvedType || '',
   );
 
@@ -903,8 +1133,35 @@ const FilePreview: React.FC<FilePreviewProps> = ({
       style={{ width, height, ...style }}
     >
       {/* 工具栏 */}
-      {(showRefresh || showDownload) && src && status === 'success' && (
+      {src && status === 'success' && (
         <div className={styles.toolbar}>
+          <Tooltip title="缩小 (Ctrl+-)">
+            <Button
+              className={styles.toolbarBtn}
+              icon={<MinusOutlined />}
+              onClick={handleZoomOut}
+              type="text"
+              size="small"
+              disabled={scale <= SCALE_MIN}
+            />
+          </Tooltip>
+          <span
+            className={styles.zoomLabel}
+            onClick={handleZoomReset}
+            title="重置缩放"
+          >
+            {Math.round(scale * 100)}%
+          </span>
+          <Tooltip title="放大 (Ctrl++)">
+            <Button
+              className={styles.toolbarBtn}
+              icon={<PlusOutlined />}
+              onClick={handleZoomIn}
+              type="text"
+              size="small"
+              disabled={scale >= SCALE_MAX}
+            />
+          </Tooltip>
           {showRefresh && (
             <Tooltip title={t('PC.Components.FilePreview.tooltipRefresh')}>
               <Button
@@ -912,6 +1169,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({
                 icon={<ReloadOutlined />}
                 onClick={handleRetry}
                 type="text"
+                size="small"
               />
             </Tooltip>
           )}
@@ -922,6 +1180,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({
                 icon={<CloudDownloadOutlined />}
                 onClick={handleDownload}
                 type="text"
+                size="small"
               />
             </Tooltip>
           )}
@@ -997,8 +1256,18 @@ const FilePreview: React.FC<FilePreviewProps> = ({
       {status === 'success' &&
         ['image', 'audio', 'video', 'html', 'markdown', 'text'].includes(
           resolvedType || '',
-        ) &&
-        renderPreviewContent()}
+        ) && (
+          <div
+            className={styles.zoomWrapper}
+            style={{
+              transform: `scale(${scale})`,
+              transformOrigin: 'top left',
+              width: scale !== 1 ? `${100 / scale}%` : '100%',
+            }}
+          >
+            {renderPreviewContent()}
+          </div>
+        )}
 
       <div
         ref={containerRef}
@@ -1012,6 +1281,10 @@ const FilePreview: React.FC<FilePreviewProps> = ({
           display: shouldShowContent ? 'block' : 'none',
           // Excel 不需要 overflow，因为它自己处理
           overflow: resolvedType === 'xlsx' ? 'hidden' : 'auto',
+          // 文档类型缩放
+          transform: shouldShowContent ? `scale(${scale})` : undefined,
+          transformOrigin: shouldShowContent ? 'top left' : undefined,
+          width: shouldShowContent && scale !== 1 ? `${100 / scale}%` : width,
         }}
       />
     </div>

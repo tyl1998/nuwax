@@ -2,6 +2,7 @@ import { dict } from '@/services/i18nRuntime';
 import { GuidQuestionDto } from '@/types/interfaces/agent';
 import type { RecommendListProps } from '@/types/interfaces/agentConfig';
 import { checkPathParams, fillPathParams } from '@/utils';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { LoadingOutlined } from '@ant-design/icons';
 import { message as antdMessage } from 'antd';
 import classNames from 'classnames';
@@ -43,7 +44,7 @@ const RecommendList: React.FC<RecommendListProps> = ({
       );
 
       // 构建完整的页面 URL
-      const fullUri = `${process.env.BASE_URL}${pageUrl}`;
+      const fullUri = withBaseUrl(pageUrl);
 
       // 调用页面预览
       showPagePreview({

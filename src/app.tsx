@@ -69,6 +69,8 @@ const AppContainer: React.FC<{ children: React.ReactElement }> = ({
 }) => {
   const setAntdConfig = useAntdConfigSetter();
   const lastAppliedRef = useRef<string>('');
+  const shouldEnableEventPolling =
+    history.location.pathname !== '/login' && UserService.isLoggedIn();
 
   // 输出版本信息到控制台
   useEffect(() => {
@@ -284,8 +286,8 @@ const AppContainer: React.FC<{ children: React.ReactElement }> = ({
 
   return (
     <>
-      {/* 只有用户已登录时才启动事件轮询 */}
-      <GlobalEventPolling />
+      {/* 只有用户已登录且不在登录页时才启动事件轮询 */}
+      {shouldEnableEventPolling ? <GlobalEventPolling /> : null}
       {children}
     </>
   );

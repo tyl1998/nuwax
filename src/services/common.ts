@@ -10,7 +10,9 @@ import { ACCESS_TOKEN } from '@/constants/home.constants';
 import { I18N_STORAGE_KEYS } from '@/constants/i18n.constants';
 import { dict } from '@/services/i18nRuntime';
 import type { RequestResponse } from '@/types/interfaces/request';
+import { redirectToExternalLogin } from '@/utils/authRedirect';
 import { redirectToLogin } from '@/utils/router';
+import { shouldUseCredentials, withBaseUrl } from '@/utils/runtimeConfig';
 import { RequestConfig } from '@@/plugin-request/request';
 import { message, Modal } from 'antd';
 import React from 'react';
@@ -154,7 +156,7 @@ const errorHandler = (error: any, opts: any) => {
         // 重定向到登录页
         case REDIRECT_LOGIN:
           clearLoginStatusCache();
-          window.location.href = errorMessage;
+          redirectToExternalLogin(errorMessage);
           break;
 
         // 智能体不存在或已下架
@@ -226,20 +228,28 @@ const errorHandler = (error: any, opts: any) => {
 const requestInterceptors = [
   // 添加基础URL
   (url: string, options: any) => {
-    const newUrl = process.env.BASE_URL + url;
+    const newUrl = withBaseUrl(url);
     return { url: newUrl, options };
   },
 
   // 添加认证头和通用头信息
   (config: any) => {
+    config.headers = config.headers || {};
+
     // 添加token认证
     const token = localStorage.getItem(ACCESS_TOKEN) ?? '';
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // 添加通用头信息
-    config.headers['Content-Type'] = 'application/json';
+    if (config.credentials === null || config.credentials === undefined) {
+      config.credentials = shouldUseCredentials() ? 'include' : 'same-origin';
+    }
+
+    // 添加通用头信息（FormData 时不设置 Content-Type，让浏览器自动设置 multipart boundary）
+    if (!(config.data instanceof FormData)) {
+      config.headers['Content-Type'] = 'application/json';
+    }
     config.headers['Accept'] = 'application/json, text/plain, */*';
     const browserLang =
       typeof navigator !== 'undefined' && navigator.language

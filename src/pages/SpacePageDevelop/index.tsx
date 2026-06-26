@@ -34,6 +34,7 @@ import {
   CustomPageDto,
 } from '@/types/interfaces/pageDev';
 import { modalConfirm } from '@/utils/ant-custom';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Empty, Input, message } from 'antd';
 import classNames from 'classnames';
@@ -315,7 +316,7 @@ const SpacePageDevelop: React.FC = () => {
     onSuccess: (result: CustomPageDto) => {
       if (result.pageUrl) {
         // 打开页面预览
-        const url = `${process.env.BASE_URL}${result.pageUrl}`;
+        const url = withBaseUrl(result.pageUrl);
         window.open(url, '_blank');
       } else {
         message.error(dict('PC.Pages.SpacePageDevelop.Index.pageUrlNotExist'));

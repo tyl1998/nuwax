@@ -16,6 +16,7 @@ import {
 } from '@/types/interfaces/library';
 import { modalConfirm } from '@/utils/ant-custom';
 import { exportFileViaBrowserDownload } from '@/utils/exportImportFile';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { message } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useSearchParams } from 'umi';
@@ -142,7 +143,7 @@ const SpaceSkillManage: React.FC = () => {
     try {
       setLoadingExportProject(true);
       // 获取技能导出文件链接地址
-      const linkUrl = `${process.env.BASE_URL}/api/skill/export/${info.id}`;
+      const linkUrl = withBaseUrl(`/api/skill/export/${info.id}`);
       // 通过浏览器下载文件
       exportFileViaBrowserDownload(linkUrl);
       message.success(dict('PC.Pages.SpaceSkillManage.exportSucceeded'));

@@ -24,6 +24,7 @@ import {
 import { modalConfirm } from '@/utils/ant-custom';
 import { exportFileViaBrowserDownload } from '@/utils/exportImportFile';
 import { updateFilesListContent, updateFilesListName } from '@/utils/fileTree';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { message } from 'antd';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
@@ -282,7 +283,7 @@ const SkillDetails: React.FC = () => {
     try {
       setLoadingExportProject(true);
       // 获取技能导出文件链接地址
-      const linkUrl = `${process.env.BASE_URL}/api/skill/export/${skillId}`;
+      const linkUrl = withBaseUrl(`/api/skill/export/${skillId}`);
       // 通过浏览器下载文件
       exportFileViaBrowserDownload(linkUrl);
       message.success(t('PC.Pages.SkillDetails.exportSuccess'));

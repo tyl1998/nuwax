@@ -1,5 +1,6 @@
 import { t } from '@/services/i18nRuntime';
 import { BaseFormItemProps, TabKey } from '@/types/interfaces/systemManage';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import {
   DeleteOutlined,
   PlusOutlined,
@@ -176,7 +177,7 @@ export default function BaseFormItem({
           case 'File':
             return (
               <Upload
-                action={process.env.BASE_URL + '/api/file/upload'}
+                action={withBaseUrl('/api/file/upload')}
                 headers={{
                   Authorization: `Bearer ${localStorage.getItem(
                     'ACCESS_TOKEN',

@@ -415,6 +415,7 @@ export const isDocumentFile = (fileName: string) => {
     'xls',
     'xlsx',
     'pdf',
+    'xmind',
   ];
   const isDoc = documentExtensions.includes(ext);
 
@@ -466,6 +467,14 @@ export const isDocumentFile = (fileName: string) => {
     return {
       isDoc: true,
       fileType: 'xlsx',
+    };
+  }
+
+  // 判断文件是否为XMind思维导图类型
+  if (ext === 'xmind') {
+    return {
+      isDoc: true,
+      fileType: 'xmind',
     };
   }
 };

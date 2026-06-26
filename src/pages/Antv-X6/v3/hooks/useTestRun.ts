@@ -10,6 +10,7 @@ import { DefaultObjectType } from '@/types/interfaces/common';
 import { GraphContainerRef, RunResultItem } from '@/types/interfaces/graph';
 import { ErrorParams } from '@/types/interfaces/workflow';
 import { createSSEConnection } from '@/utils/fetchEventSource';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { useCallback, useState } from 'react';
 import { useModel } from 'umi';
 import { v4 as uuidv4 } from 'uuid';
@@ -99,7 +100,7 @@ export const useTestRun = ({
       setTestRunResult('');
 
       const abortConnection = await createSSEConnection({
-        url: `${process.env.BASE_URL}/api/workflow/test/node/execute`,
+        url: withBaseUrl('/api/workflow/test/node/execute'),
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
@@ -153,7 +154,7 @@ export const useTestRun = ({
     async (params: ITestRun) => {
       setLoading(true);
       const abortConnection = await createSSEConnection({
-        url: `${process.env.BASE_URL}/api/workflow/test/execute`,
+        url: withBaseUrl('/api/workflow/test/execute'),
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,

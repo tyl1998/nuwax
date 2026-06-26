@@ -45,6 +45,7 @@ import type {
 } from '@/types/interfaces/conversationInfo';
 import { arraysContainSameItems, parsePageAppProjectId } from '@/utils/common';
 import { jumpToPageDevelop } from '@/utils/router';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Form, message, Typography } from 'antd';
 import classNames from 'classnames';
@@ -233,7 +234,7 @@ const ConversationDetails: React.FC<ConversationDetailsProps> = ({
       // 自动触发预览
       showPagePreview({
         name: t('PC.Components.ConversationDetails.pagePreviewName'),
-        uri: process.env.BASE_URL + agentDetail?.pageHomeIndex,
+        uri: withBaseUrl(agentDetail?.pageHomeIndex || ''),
         params: {},
         executeId: '',
       });

@@ -1152,6 +1152,8 @@ export const EN_US: SystemLangMap = {
   "PC.Constants.Theme.bgForestDawnDesc": "Bright background, suitable for light layout",
   "PC.Constants.Theme.bgFreshBlueSky": "Fresh Blue Sky",
   "PC.Constants.Theme.bgFreshBlueSkyDesc": "Fresh and bright, suitable for light layout",
+  "PC.Constants.Theme.bgForestGreen": "Forest Green",
+  "PC.Constants.Theme.bgForestGreenDesc": "Deep saturated green, calm and professional, suitable for dark layout",
   "PC.Constants.Theme.bgNightCity": "Night City",
   "PC.Constants.Theme.bgNightCityDesc": "City night view, suitable for dark layout",
   "PC.Constants.Theme.bgStarryNight": "Starry Night",

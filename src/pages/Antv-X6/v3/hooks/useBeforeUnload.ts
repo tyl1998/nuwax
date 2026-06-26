@@ -7,6 +7,7 @@
  * 3) Attempt synchronous save through `sendBeacon`
  */
 
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { Graph } from '@antv/x6';
 import { useCallback, useEffect, useRef } from 'react';
 import { workflowSaveService } from '../services/WorkflowSaveService';
@@ -50,7 +51,7 @@ export function useBeforeUnload({
         const blob = new Blob([JSON.stringify({ workflowConfig: payload })], {
           type: 'application/json',
         });
-        return navigator.sendBeacon('/api/workflow/save', blob);
+        return navigator.sendBeacon(withBaseUrl('/api/workflow/save'), blob);
       }
     } catch (e) {
       console.error('[useBeforeUnload] sendBeacon failed:', e);

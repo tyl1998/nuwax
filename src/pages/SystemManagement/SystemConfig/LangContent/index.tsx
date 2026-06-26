@@ -18,6 +18,7 @@ import type { Page } from '@/types/interfaces/request';
 import { modalConfirm } from '@/utils/ant-custom';
 import { createSSEConnection } from '@/utils/fetchEventSourceConversationInfo';
 import { downloadI18nConfigExportBlob } from '@/utils/i18nConfigExportBlob';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type {
   ActionType,
@@ -139,7 +140,9 @@ const LangContent: React.FC = () => {
     translateAllAbortRef.current?.();
 
     translateAllAbortRef.current = createSSEConnection({
-      url: `${process.env.BASE_URL}/api/system/i18n/config/translateAll?sourceLang=${defaultLang}&targetLang=${lang}`,
+      url: withBaseUrl(
+        `/api/system/i18n/config/translateAll?sourceLang=${defaultLang}&targetLang=${lang}`,
+      ),
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

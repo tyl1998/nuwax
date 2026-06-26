@@ -124,6 +124,13 @@ export const THEME_BACKGROUND_CONFIGS: ThemeBackgroundConfig[] = [
     layoutStyle: ThemeLayoutColorStyle.LIGHT,
     description: dict('PC.Constants.Theme.bgFreshBlueSkyDesc'),
   },
+  {
+    id: 'bg-variant-9',
+    name: dict('PC.Constants.Theme.bgForestGreen'),
+    url: '/bg/bg-variant-9.png',
+    layoutStyle: ThemeLayoutColorStyle.DARK,
+    description: dict('PC.Constants.Theme.bgForestGreenDesc'),
+  },
 ];
 
 /**

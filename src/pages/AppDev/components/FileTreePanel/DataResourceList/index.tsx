@@ -11,6 +11,7 @@ import {
 } from '@/types/enums/agent';
 import type { AgentComponentInfo } from '@/types/interfaces/agent';
 import type { DataResource } from '@/types/interfaces/dataResource';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
 import { message, Modal } from 'antd';
 import React, { useState } from 'react';
@@ -193,13 +194,13 @@ const DataResourceList: React.FC<DataResourceListProps> = ({
   const handleResourceClick = (resource: DataResource) => {
     if (resource.type === 'plugin') {
       window.open(
-        `${process.env.BASE_URL}/square/publish/plugin/${resource.id}`,
+        withBaseUrl(`/square/publish/plugin/${resource.id}`),
         '_blank',
         'noopener,noreferrer',
       );
     } else if (resource.type === 'workflow') {
       window.open(
-        `${process.env.BASE_URL}/square/publish/workflow/${resource.id}`,
+        withBaseUrl(`/square/publish/workflow/${resource.id}`),
         '_blank',
         'noopener,noreferrer',
       );

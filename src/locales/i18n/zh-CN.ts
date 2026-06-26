@@ -1152,6 +1152,8 @@ export const ZH_CN: SystemLangMap = {
   "PC.Constants.Theme.bgForestDawnDesc": "明亮背景，适合浅色布局风格",
   "PC.Constants.Theme.bgFreshBlueSky": "清新蓝天",
   "PC.Constants.Theme.bgFreshBlueSkyDesc": "清新明亮，适合浅色布局风格",
+  "PC.Constants.Theme.bgForestGreen": "森林墨绿",
+  "PC.Constants.Theme.bgForestGreenDesc": "低明度高饱和度深绿，沉稳正式，适合深色布局风格",
   "PC.Constants.Theme.bgNightCity": "夜晚都市",
   "PC.Constants.Theme.bgNightCityDesc": "都市夜景，适合深色布局风格",
   "PC.Constants.Theme.bgStarryNight": "星空夜景",

@@ -5,6 +5,7 @@ import {
   EventSourceMessage,
   fetchEventSource,
 } from '@microsoft/fetch-event-source';
+import { shouldUseCredentials } from './runtimeConfig';
 
 export interface SSEOptions<T = any> {
   url: string;
@@ -156,6 +157,7 @@ export function createSSEConnection<T = any>(
           typeof options.body === 'object'
             ? JSON.stringify(options.body)
             : options.body,
+        credentials: shouldUseCredentials() ? 'include' : 'same-origin',
         signal: controller.signal,
         openWhenHidden: true, // 页面不可见时保持连接
 

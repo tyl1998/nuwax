@@ -1,6 +1,7 @@
 import { dict } from '@/services/i18nRuntime';
 import { EventBindResponseActionEnum } from '@/types/enums/agent';
 import { checkPathParams, fillPathParams } from '@/utils';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { message as antdMessage } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { useModel } from 'umi';
@@ -112,7 +113,7 @@ export const useMessageEventDelegate = ({
             // 构建完整的页面 URL
             const fullUri = eventConfig.basePath
               ? `${eventConfig.basePath}${pageUrl}`
-              : `${process.env.BASE_URL}${pageUrl}`;
+              : withBaseUrl(pageUrl);
 
             console.log('[Event Delegate] Opening page:', {
               uri: fullUri,

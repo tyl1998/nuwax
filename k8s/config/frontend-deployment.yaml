@@ -16,6 +16,33 @@ spec:
       containers:
       - name: agent-frontend
         image: localhost:5000/agent-platform-front:latest
+        env:
+        - name: BASE_URL
+          value: https://api.example.com
+        - name: WS_BASE_URL
+          value: wss://api.example.com
+        - name: APP_ENV
+          value: prod
+        - name: APP_VERSION
+          value: "1.1.12"
+        - name: ENABLE_MOBILE_REDIRECT
+          value: "true"
         ports:
         - containerPort: 80
         - containerPort: 443
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 3
+          failureThreshold: 3

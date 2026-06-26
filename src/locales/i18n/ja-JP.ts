@@ -1123,6 +1123,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Constants.Theme.bgForestDawnDesc": "明るい背景、明るいレイアウトに適しています",
   "PC.Constants.Theme.bgFreshBlueSky": "フレッシュブルースカイ",
   "PC.Constants.Theme.bgFreshBlueSkyDesc": "さわやかで明るく、明るいレイアウトに適しています",
+  "PC.Constants.Theme.bgForestGreen": "フォレストグリーン",
+  "PC.Constants.Theme.bgForestGreenDesc": "深い彩度の高いグリーン、落ち着いたプロフェッショナルな暗いレイアウトに適しています",
   "PC.Constants.Theme.bgNightCity": "ナイトシティ",
   "PC.Constants.Theme.bgNightCityDesc": "都市の夜景、暗いレイアウトに適しています",
   "PC.Constants.Theme.bgStarryNight": "星月夜",

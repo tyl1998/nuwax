@@ -23,6 +23,7 @@ import type {
 } from '@/types/interfaces/appDev';
 import type { RequestResponse } from '@/types/interfaces/request';
 import { exportFileViaBrowserDownload } from '@/utils/exportImportFile';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { message } from 'antd';
 import { request } from 'umi';
 
@@ -452,11 +453,11 @@ export const getProjectContentByVersion = async (
 export async function exportProject(projectId: string): Promise<void> {
   try {
     // 导出项目链接地址
-    const linkUrl =
-      process.env.BASE_URL +
+    const linkUrl = withBaseUrl(
       `/api/custom-page/export-project?projectId=${encodeURIComponent(
         projectId,
-      )}`;
+      )}`,
+    );
 
     // 通过浏览器下载文件
     exportFileViaBrowserDownload(linkUrl);

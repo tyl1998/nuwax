@@ -20,6 +20,7 @@ import { isMarkdownFile } from './common';
 import { exportFileViaBrowserDownload } from './exportImportFile';
 import { htmlToPdf } from './htmlToPdf';
 import { markdownToPdf } from './markdownToPdf';
+import { withBaseUrl } from './runtimeConfig';
 
 // 获取文件图标
 export const getFileIcon = (name: string) => {
@@ -270,7 +271,7 @@ export const downloadFileByUrl = async (
     // 构建完整的 URL
     const fullUrl = fileProxyUrl.startsWith('http')
       ? fileProxyUrl
-      : `${process.env.BASE_URL || ''}${fileProxyUrl}`;
+      : withBaseUrl(fileProxyUrl);
 
     // 通过浏览器下载文件
     exportFileViaBrowserDownload(fullUrl);

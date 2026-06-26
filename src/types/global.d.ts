@@ -23,6 +23,7 @@ declare namespace Global {
 declare global {
   interface Window {
     Global: typeof Global;
+    __NUWAX_RUNTIME_CONFIG__?: import('@/utils/runtimeConfig').NuwaxRuntimeConfig;
     NuwaClawBridge?: {
       perf?: {
         enabled?: () => boolean;

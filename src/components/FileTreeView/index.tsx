@@ -21,6 +21,7 @@ import {
   updateFileTreeContent,
   updateFileTreeName,
 } from '@/utils/fileTree';
+import { getBaseUrl, toSameOriginUrl } from '@/utils/runtimeConfig';
 import { ReloadOutlined } from '@ant-design/icons';
 import { Button, message, Spin, Tooltip } from 'antd';
 import classNames from 'classnames';
@@ -1402,7 +1403,7 @@ const FileTreeView = forwardRef<FileTreeViewRef, FileTreeViewProps>(
         return (
           <VncPreview
             ref={vncPreviewRef}
-            serviceUrl={process.env.BASE_URL || ''}
+            serviceUrl={getBaseUrl()}
             cId={targetId?.toString() || ''}
             readOnly={readOnly}
             autoConnect={true}
@@ -1451,9 +1452,9 @@ const FileTreeView = forwardRef<FileTreeViewRef, FileTreeViewProps>(
 
       // 获取文件代理URL
       let fileProxyUrl = selectedFileNode?.fileProxyUrl || '';
-      // 如果是相对路径（不以 http://, https:// 或 // 开头），则添加 BASE_URL 前缀
-      if (fileProxyUrl && !/^(https?:)?\/\//i.test(fileProxyUrl)) {
-        fileProxyUrl = `${process.env.BASE_URL || ''}${fileProxyUrl}`;
+      // 绝对URL转同源相对路径，避免跨域请求丢失Cookie
+      if (fileProxyUrl) {
+        fileProxyUrl = toSameOriginUrl(fileProxyUrl);
       }
 
       // 视频文件：使用FilePreview组件

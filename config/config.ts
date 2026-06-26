@@ -44,6 +44,10 @@ export default defineConfig({
   // 添加阿里云验证码脚本和双向跳转脚本
   headScripts: [
     {
+      src: '/runtime-config.js',
+      type: 'text/javascript',
+    },
+    {
       src: 'https://o.alicdn.com/captcha-frontend/aliyunCaptcha/AliyunCaptcha.js',
       type: 'text/javascript',
     },
@@ -57,6 +61,13 @@ export default defineConfig({
 				// 开发模式检测 - 如果是开发环境则不执行跳转
 				if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'development') {
 					console.log('开发模式检测到，跳过双向跳转逻辑');
+					return;
+				}
+
+				// 运行时开关：允许通过 runtime-config.js 关闭 PC/H5 双向跳转
+				const runtimeConfig = window.__NUWAX_RUNTIME_CONFIG__ || {};
+				if (String(runtimeConfig.ENABLE_MOBILE_REDIRECT || 'true').toLowerCase() === 'false') {
+					console.log('ENABLE_MOBILE_REDIRECT=false，跳过双向跳转逻辑');
 					return;
 				}
 

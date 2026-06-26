@@ -90,6 +90,8 @@ export const FILE_CONSTANTS = {
     'csv',
     'tsv',
     'rtf',
+    // 思维导图
+    'xmind',
   ],
   // 忽略的文件模式
   IGNORED_FILE_PATTERNS: [

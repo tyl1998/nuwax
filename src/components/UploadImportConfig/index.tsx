@@ -5,6 +5,7 @@ import type {
   FileType,
   UploadImportConfigProps,
 } from '@/types/interfaces/common';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Modal, Upload, UploadProps } from 'antd';
 import React, { useState } from 'react';
@@ -85,7 +86,7 @@ const UploadImportConfig: React.FC<UploadImportConfigProps> = ({
   return (
     <>
       <Upload
-        action={`${process.env.BASE_URL}/api/template/import/${spaceId}`}
+        action={withBaseUrl(`/api/template/import/${spaceId}`)}
         onChange={handleChange}
         style={{ display: 'none' }}
         headers={{

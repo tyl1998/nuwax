@@ -1,13 +1,49 @@
+# WebSocket upgrade 映射
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
 server {
     listen       80;
     listen  [::]:80;
-    # 修改成自己需要的域名
-    #server_name  localhost;
-    #server_name   ${SERVER_NAME}  localhost;
+    server_name  ${SERVER_NAME};
 
     charset utf-8;
 
     #access_log  /var/log/nginx/host.access.log  main;
+
+    location = /healthz {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 'ok';
+    }
+
+    location /api/ {
+        proxy_pass ${API_PROXY_URL};
+        proxy_http_version 1.1;
+        proxy_set_header Host ${NGINX_HOST};
+        proxy_set_header X-Real-IP ${NGINX_REMOTE_ADDR};
+        proxy_set_header X-Forwarded-For ${NGINX_PROXY_ADD_X_FORWARDED_FOR};
+        proxy_set_header X-Forwarded-Proto ${NGINX_SCHEME};
+        proxy_set_header Upgrade ${NGINX_HTTP_UPGRADE};
+        proxy_set_header Connection ${NGINX_CONNECTION_UPGRADE};
+    }
+
+    # Computer 智能体桌面路由（VNC、WebSocket、音频等）代理到后端 ComputerProxy
+    location /computer/ {
+        proxy_pass ${COMPUTER_PROXY_URL};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host ${NGINX_HOST};
+        proxy_set_header X-Real-IP ${NGINX_REMOTE_ADDR};
+        proxy_set_header X-Forwarded-For ${NGINX_PROXY_ADD_X_FORWARDED_FOR};
+        proxy_set_header X-Forwarded-Proto ${NGINX_SCHEME};
+        proxy_buffering off;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
 
     location / {
         root    /usr/share/nginx/html;

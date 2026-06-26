@@ -49,6 +49,7 @@ import { FileNode } from '@/types/interfaces/appDev';
 import { DataResource } from '@/types/interfaces/dataResource';
 import { generateRequestId } from '@/utils/chatUtils';
 import eventBus, { EVENT_NAMES } from '@/utils/eventBus';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   Alert,
@@ -699,7 +700,7 @@ const AppDevDesign: React.FC = () => {
               {prodServerUrl && (
                 <p>
                   <a
-                    href={`${process.env.BASE_URL}${prodServerUrl}`}
+                    href={withBaseUrl(prodServerUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -1550,7 +1551,7 @@ const AppDevDesign: React.FC = () => {
                     onFullscreenPreview: () => {
                       if (previewRef.current && workspace.devServerUrl) {
                         window.open(
-                          `${process.env.BASE_URL}${workspace.devServerUrl}`,
+                          withBaseUrl(workspace.devServerUrl),
                           '_blank',
                         );
                       }

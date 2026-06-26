@@ -40,6 +40,7 @@ export async function apiI18nLangList(): Promise<
 > {
   return request('/api/i18n/lang/list', {
     method: 'GET',
+    skipErrorHandler: true,
   });
 }
 

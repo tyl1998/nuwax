@@ -12,6 +12,7 @@ import { SquareAgentTypeEnum } from '@/types/enums/square';
 import { PublishTemplateCopyParams } from '@/types/interfaces/publish';
 import { exportFileViaBrowserDownload } from '@/utils/exportImportFile';
 import { jumpToSkill } from '@/utils/router';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { Button, message, Space } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
@@ -137,7 +138,7 @@ const SkillDetail: React.FC = ({}) => {
     try {
       setLoadingExportProject(true);
       // 获取技能导出文件链接地址
-      const linkUrl = `${process.env.BASE_URL}/api/published/skill/export/${skillId}`;
+      const linkUrl = withBaseUrl(`/api/published/skill/export/${skillId}`);
       // 通过浏览器下载文件
       exportFileViaBrowserDownload(linkUrl);
       message.success(dict('PC.Pages.Square.SkillDetail.exportSuccess'));

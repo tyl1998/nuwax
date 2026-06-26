@@ -1,23 +1,30 @@
 import { dict } from '@/services/i18nRuntime';
 import { AgentComponentTypeEnum, BindValueType } from '@/types/enums/agent';
 import { DataTypeEnum } from '@/types/enums/common';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 
 // 文件上传地址
-export const UPLOAD_FILE_ACTION = `${process.env.BASE_URL}/api/file/upload`;
+export const UPLOAD_FILE_ACTION = withBaseUrl('/api/file/upload');
 
 // 会话 Connection地址
-export const CONVERSATION_CONNECTION_URL = `${process.env.BASE_URL}/api/agent/conversation/chat`;
+export const CONVERSATION_CONNECTION_URL = withBaseUrl(
+  '/api/agent/conversation/chat',
+);
 // 临时会话 Connection地址
-export const TEMP_CONVERSATION_CONNECTION_URL = `${process.env.BASE_URL}/api/temp/chat/completions`;
+export const TEMP_CONVERSATION_CONNECTION_URL = withBaseUrl(
+  '/api/temp/chat/completions',
+);
 
 // 提示词优化地址
-export const PROMPT_OPTIMIZE_URL = `${process.env.BASE_URL}/api/assistant/prompt/optimize`;
+export const PROMPT_OPTIMIZE_URL = withBaseUrl(
+  '/api/assistant/prompt/optimize',
+);
 
 // 代码优化地址
-export const CODE_OPTIMIZE_URL = `${process.env.BASE_URL}/api/assistant/code/optimize`;
+export const CODE_OPTIMIZE_URL = withBaseUrl('/api/assistant/code/optimize');
 
 // Sql优化地址
-export const SQL_OPTIMIZE_URL = `${process.env.BASE_URL}/api/assistant/sql/optimize`;
+export const SQL_OPTIMIZE_URL = withBaseUrl('/api/assistant/sql/optimize');
 // 文档地址
 export const DOCUMENT_URL = 'https://nlp-book.swufenlp.group';
 

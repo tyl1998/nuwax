@@ -21,7 +21,7 @@ const cx = classNames.bind(styles);
 
 interface HorizontalGroupListProps {
   spaceId: number;
-  value: number; // 当前选中的分组 ID，0 表示“全部”
+  value: number; // 当前选中的分组 ID，0 表示"全部"
   onChange: (groupId: number, groupType?: string) => void;
   componentList?: any[]; // 用于组件统计（可选）
   className?: string;
@@ -29,6 +29,8 @@ interface HorizontalGroupListProps {
   refreshTrigger?: number;
   onEdit: (group: ResourceGroupInfo) => void;
   onDeleteSuccess?: () => void;
+  /** 是否禁用分组列表请求，为 true 时不会调用 api/resource/group/list */
+  disabled?: boolean;
 }
 
 const HorizontalGroupList: React.FC<HorizontalGroupListProps> = ({
@@ -40,6 +42,7 @@ const HorizontalGroupList: React.FC<HorizontalGroupListProps> = ({
   refreshTrigger,
   onEdit,
   onDeleteSuccess,
+  disabled = false,
 }) => {
   const [groupList, setGroupList] = useState<ResourceGroupInfo[]>([]);
   const [loading, setLoading] = useState(false);
@@ -51,7 +54,7 @@ const HorizontalGroupList: React.FC<HorizontalGroupListProps> = ({
   // 根据筛选类型获取分组列表
   const fetchGroupList = React.useCallback(
     (targetGroupId?: number, force = false) => {
-      if (!spaceId) return;
+      if (!spaceId || disabled) return;
 
       let typesParam: string[] = [];
       if (filterType === ComponentTypeEnum.All_Type) {
@@ -96,8 +99,9 @@ const HorizontalGroupList: React.FC<HorizontalGroupListProps> = ({
   );
 
   useEffect(() => {
+    if (disabled) return;
     fetchGroupList();
-  }, [fetchGroupList, refreshTrigger]);
+  }, [fetchGroupList, refreshTrigger, disabled]);
 
   const handleDelete = React.useCallback(
     (group: ResourceGroupInfo, e: React.MouseEvent) => {

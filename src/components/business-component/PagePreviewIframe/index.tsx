@@ -3,6 +3,7 @@ import { SANDBOX } from '@/constants/common.constants';
 import { apiAgentComponentPageResultUpdate } from '@/services/agentConfig';
 import { t } from '@/services/i18nRuntime';
 import { copyTextToClipboard } from '@/utils';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { Button, Spin, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
@@ -124,7 +125,7 @@ const PagePreviewIframe: React.FC<PagePreviewIframeProps> = ({
 
     // 如果不是 http(s) 开头，则加上 BASE_URL
     if (!/^https?:\/\//.test(uri)) {
-      uri = `${process.env.BASE_URL}${uri}`;
+      uri = withBaseUrl(uri);
     }
 
     // 如果没有参数，直接返回 uri

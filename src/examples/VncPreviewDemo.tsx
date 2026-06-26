@@ -1,4 +1,5 @@
 import VncPreview from '@/components/business-component/VncPreview';
+import { getBaseUrl } from '@/utils/runtimeConfig';
 import {
   Breadcrumb,
   Card,
@@ -30,7 +31,7 @@ const VncPreviewDemo: React.FC = () => {
 
   // 测试配置
   const config = {
-    serviceUrl: process.env.BASE_URL as string,
+    serviceUrl: getBaseUrl(),
     cId: urlCId,
     autoConnect: true,
   };

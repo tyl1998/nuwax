@@ -1,4 +1,5 @@
 import { SUCCESS_CODE } from '@/constants/codes.constants';
+import { TENANT_CONFIG_INFO } from '@/constants/home.constants';
 import {
   DEFAULT_I18N_LANG,
   I18N_KEY_REGEX,
@@ -93,6 +94,21 @@ const readLangFromCache = (): string | null => {
   return safeGetItem(I18N_STORAGE_KEYS.ACTIVE_LANG);
 };
 
+const readLangFromTenantCache = (): string | null => {
+  try {
+    const tenantConfigString = safeGetItem(TENANT_CONFIG_INFO);
+    if (!tenantConfigString) return null;
+
+    const tenantConfig = JSON.parse(tenantConfigString);
+    if (!tenantConfig?.templateConfig) return null;
+
+    const templateConfig = JSON.parse(tenantConfig.templateConfig);
+    return templateConfig?.language || null;
+  } catch {
+    return null;
+  }
+};
+
 const parseLangMapResult = (result: any): SystemLangMap | null => {
   const resultData =
     result?.data && typeof result.data === 'object' ? result.data : result;
@@ -138,9 +154,11 @@ export const fetchAndApplyLangMap = async (
     const result = await apiI18nQuery(lang, side);
     const parsedMap = parseLangMapResult(result);
     if (!parsedMap) {
-      // 请求失败（或数据异常），统一启用本地英语兜底
-      langMap = { ...MIN_EN_I18N_MAP };
-      setCurrentLang('en-us');
+      const fallbackLang = normalizeLang(
+        lang || currentLang || DEFAULT_I18N_LANG,
+      );
+      langMap = { ...getLocalDefaultMapByLang(fallbackLang) };
+      setCurrentLang(fallbackLang);
       return false;
     }
 
@@ -153,9 +171,11 @@ export const fetchAndApplyLangMap = async (
 
     return true;
   } catch {
-    // 捕获异常：统一应用本地英语兜底
-    langMap = { ...MIN_EN_I18N_MAP };
-    setCurrentLang('en-us');
+    const fallbackLang = normalizeLang(
+      lang || currentLang || DEFAULT_I18N_LANG,
+    );
+    langMap = { ...getLocalDefaultMapByLang(fallbackLang) };
+    setCurrentLang(fallbackLang);
     return false;
   }
 };
@@ -276,7 +296,10 @@ export const initI18n = async (force: boolean = false): Promise<void> => {
   if (initialized && !force) return;
 
   const cachedLang = readLangFromCache();
-  const resolvedLang = normalizeLang(cachedLang || getBrowserLang());
+  const tenantLang = readLangFromTenantCache();
+  const resolvedLang = normalizeLang(
+    cachedLang || tenantLang || DEFAULT_I18N_LANG,
+  );
   setCurrentLang(resolvedLang);
 
   // 初始先用本地语种填充，随后会被接口数据覆盖

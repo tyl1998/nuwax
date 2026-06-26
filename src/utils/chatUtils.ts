@@ -19,6 +19,7 @@ import {
   type FileStreamAttachment,
   type ToolCallInfo,
 } from '@/types/interfaces/appDev';
+import { getBaseUrl, withBaseUrl } from '@/utils/runtimeConfig';
 
 /**
  * 检测是否为依赖操作（安装、删除、升级依赖）
@@ -904,9 +905,7 @@ export const generateSSEUrl = (
   if (projectId) {
     queryParams.set('project_id', projectId);
   }
-  return `${
-    process.env.BASE_URL
-  }/api/custom-page/ai-session-sse?${queryParams.toString()}`;
+  return `${getBaseUrl()}/api/custom-page/ai-session-sse?${queryParams.toString()}`;
 };
 
 /**
@@ -914,7 +913,7 @@ export const generateSSEUrl = (
  * @returns AI-CHAT SSE连接URL
  */
 export const generateAIChatSSEUrl = (): string => {
-  return `${process.env.BASE_URL}/api/custom-page/ai-chat-flux`;
+  return withBaseUrl('/api/custom-page/ai-chat-flux');
 };
 
 /**

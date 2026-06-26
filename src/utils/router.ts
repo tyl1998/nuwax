@@ -104,7 +104,12 @@ export const jumpToPageDevelop = (spaceId: number) => {
 };
 
 export const redirectToLogin = (redirect: string | number = '/') => {
-  jumpTo(`/login?redirect=${encodeURIComponent(redirect)}`);
+  const pathname = window.location.pathname || history.location.pathname;
+  if (pathname === '/login') return;
+  jumpTo({
+    url: `/login?redirect=${encodeURIComponent(redirect)}`,
+    method: 'replace',
+  });
 };
 
 export const redirectTo = (url: string) => {

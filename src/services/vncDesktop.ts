@@ -9,6 +9,7 @@ import type {
   StaticFileListResponse,
 } from '@/types/interfaces/vncDesktop';
 import { exportFileViaBrowserDownload } from '@/utils/exportImportFile';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { message } from 'antd';
 import { request } from 'umi';
 
@@ -91,7 +92,9 @@ export async function apiUploadFiles(
 export async function apiDownloadAllFiles(cId: number): Promise<void> {
   try {
     // 获取导出文件链接地址
-    const linkUrl = `${process.env.BASE_URL}/api/computer/static/download-all-files?cId=${cId}`;
+    const linkUrl = withBaseUrl(
+      `/api/computer/static/download-all-files?cId=${cId}`,
+    );
     // 通过浏览器下载文件
     exportFileViaBrowserDownload(linkUrl);
     message.success(t('PC.Pages.Chat.exportSuccess'));

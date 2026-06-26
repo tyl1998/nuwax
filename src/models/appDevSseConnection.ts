@@ -1,6 +1,7 @@
 import { ACCESS_TOKEN } from '@/constants/home.constants';
 import type { UnifiedSessionMessage } from '@/types/interfaces/appDev';
 import { createSSEConnection } from '@/utils/fetchEventSource';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { useCallback } from 'react';
 
 /**
@@ -38,7 +39,9 @@ export default () => {
       // 初始化 AppDev SSE 连接
 
       const token = localStorage.getItem(ACCESS_TOKEN) ?? '';
-      const sseUrl = `${process.env.BASE_URL}/api/custom-page/ai-session-sse?session_id=${config.sessionId}`;
+      const sseUrl = withBaseUrl(
+        `/api/custom-page/ai-session-sse?session_id=${config.sessionId}`,
+      );
       // 连接到 SSE 服务
 
       // 直接获取 abort 句柄

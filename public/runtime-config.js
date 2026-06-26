@@ -1,0 +1,10 @@
+window.__NUWAX_RUNTIME_CONFIG__ = window.__NUWAX_RUNTIME_CONFIG__ || {
+  BASE_URL: '',
+  WS_BASE_URL: '',
+  ROUTER_BASENAME: '',
+  PUBLIC_PATH: '/',
+  ENABLE_MOBILE_REDIRECT: 'true',
+  WITH_CREDENTIALS: '',
+  APP_ENV: '',
+  APP_VERSION: '',
+};

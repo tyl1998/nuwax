@@ -18,6 +18,7 @@ import { UserAvatarEnum } from '@/types/enums/menus';
 import { AgentDetailDto, CustomPageNavItem } from '@/types/interfaces/agent';
 import { ConversationInfo } from '@/types/interfaces/conversationInfo';
 import eventBus from '@/utils/eventBus';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import {
   CreditCardOutlined,
   FileTextOutlined,
@@ -232,7 +233,7 @@ const BaseTemplate: React.FC = () => {
   // 页面导航跳转
   const handleOpenPage = (page: CustomPageNavItem) => {
     closeSidebarIfMobileOpen();
-    const url = page.path ? `${process.env.BASE_URL}${page.path}` : '';
+    const url = page.path ? withBaseUrl(page.path) : '';
     if (url) {
       history.push(
         `/app/open-iframe-page/${agentId}?url=${encodeURIComponent(url)}`,
@@ -537,9 +538,7 @@ const BaseTemplate: React.FC = () => {
                   (item: CustomPageNavItem, index: number) => {
                     // 获取页面url: 如果path存在，则拼接base url
                     // path: "/page/6368147380375552-1590/prod/"
-                    const url = item.path
-                      ? `${process.env.BASE_URL}${item.path}`
-                      : '';
+                    const url = item.path ? withBaseUrl(item.path) : '';
                     // 判断是否为当前页面
                     const isActive =
                       location.pathname.includes('/app/open-iframe-page/') &&

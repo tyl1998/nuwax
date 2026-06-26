@@ -233,6 +233,7 @@ const SpaceWorkflow: React.FC = () => {
         onChange={handleGroupChange}
         filterType={type}
         refreshTrigger={refreshGroupTrigger}
+        disabled
         onEdit={(group) => {
           setGroupModalMode('edit');
           setEditingGroup(group);

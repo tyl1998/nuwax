@@ -12,6 +12,7 @@ import {
   apiExportFileBlob,
   ExportFileBlobResponse,
 } from '@/utils/exportImportFile';
+import { toSameOriginUrl } from '@/utils/runtimeConfig';
 import { request } from 'umi';
 
 // 查询技能详情
@@ -136,15 +137,13 @@ export async function apiSkillConfigHistoryList(
 
 /**
  * 查询指定URL接口
- * 用于获取相对路径的URL内容（会自动添加BASE_URL前缀）
- * @param url Relative URL, e.g. '/api/computer/static/1461016/daily-news-report.md'
- * @returns Promise<RequestResponse<string>> 返回URL的内容
+ * 用于获取文件代理URL的内容，自动将绝对URL转为同源相对路径
+ * @param url 文件代理URL，可以是绝对路径或相对路径
+ * @returns Promise<string> 返回URL的内容
  */
 export async function fetchContentFromUrl(url: string): Promise<string> {
   try {
-    // 判断是否为绝对路径（以 http://, https:// 或 // 开头）
-    const isAbsoluteUrl = /^(https?:)?\/\//i.test(url);
-    const fullUrl = isAbsoluteUrl ? url : `${process.env.BASE_URL || ''}${url}`;
+    const fullUrl = toSameOriginUrl(url);
     const token = localStorage.getItem(ACCESS_TOKEN) ?? '';
     const response = await fetch(fullUrl, {
       method: 'GET',

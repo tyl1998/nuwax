@@ -74,6 +74,7 @@ import { ErrorParams } from '@/types/interfaces/workflow';
 import { cloneDeep, noop } from '@/utils/common';
 import { createSSEConnection } from '@/utils/fetchEventSource';
 import { calculateNodePosition, getCoordinates } from '@/utils/graph';
+import { withBaseUrl } from '@/utils/runtimeConfig';
 import { updateNodeEdges } from '@/utils/updateEdge';
 import {
   apiUpdateNode,
@@ -1247,7 +1248,7 @@ const Workflow: React.FC = () => {
     setTestRunResult('');
 
     const abortConnection = await createSSEConnection({
-      url: `${process.env.BASE_URL}/api/workflow/test/node/execute`,
+      url: withBaseUrl('/api/workflow/test/node/execute'),
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
@@ -1299,7 +1300,7 @@ const Workflow: React.FC = () => {
     // await getDetails();
     setLoading(true);
     const abortConnection = await createSSEConnection({
-      url: `${process.env.BASE_URL}/api/workflow/test/execute`,
+      url: withBaseUrl('/api/workflow/test/execute'),
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
