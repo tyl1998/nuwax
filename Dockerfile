@@ -7,8 +7,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 
 RUN npm install -g pnpm@10.27.0 --registry=https://registry.npmmirror.com
 
-RUN --mount=type=cache,id=nuwax-pnpm-store,target=/root/.local/share/pnpm/store \
-  pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 # 再复制源码，避免代码改动导致依赖层失效
 COPY . .
