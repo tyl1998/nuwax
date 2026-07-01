@@ -7,6 +7,7 @@ CONTAINER_NAME="${CONTAINER_NAME:-nuwax-frontend}"
 HOST_PORT="${HOST_PORT:-80}"
 SERVER_NAME="${SERVER_NAME:-_}"
 API_PROXY_URL="${API_PROXY_URL:-http://host.docker.internal:8080}"
+COMPUTER_PROXY_URL="${COMPUTER_PROXY_URL:-http://host.docker.internal:18085}"
 APP_ENV="${APP_ENV:-prod}"
 
 ROUTER_BASENAME="${ROUTER_BASENAME:-}"
@@ -27,6 +28,7 @@ docker run -d \
   -p "${HOST_PORT}:80" \
   -e SERVER_NAME="${SERVER_NAME}" \
   -e API_PROXY_URL="${API_PROXY_URL}" \
+  -e COMPUTER_PROXY_URL="${COMPUTER_PROXY_URL}" \
   -e BASE_URL= \
   -e WS_BASE_URL= \
   -e ROUTER_BASENAME="${ROUTER_BASENAME}" \
