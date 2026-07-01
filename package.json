@@ -155,5 +155,13 @@
   "packageManager": "pnpm@10.27.0",
   "engines": {
     "node": "> 18.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "es5-ext",
+      "esbuild"
+    ]
   }
 }
