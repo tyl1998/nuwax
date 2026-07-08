@@ -15,6 +15,8 @@ interface WorkspaceLayoutProps {
   title?: string;
   // 是否隐藏滚动条
   hideScroll?: boolean;
+  // 是否隐藏内置页头
+  hideHeader?: boolean;
   extraContent?: React.ReactNode;
   // Padding 配置
   headerPadding?: React.CSSProperties['padding'];
@@ -36,6 +38,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
   rightSlot,
   title,
   hideScroll = false,
+  hideHeader = false,
   extraContent,
   headerPadding,
   contentPadding,
@@ -54,41 +57,48 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
 
   return (
     <div className={cx(styles.container, 'flex', 'flex-col', 'h-full')}>
-      <div
-        className={cx(styles['header-area'])}
-        style={{ padding: headerPadding }}
-      >
+      {!hideHeader && (
         <div
-          className={cx(styles['header-left'], 'flex', 'items-center', 'gap-2')}
+          className={cx(styles['header-area'])}
+          style={{ padding: headerPadding }}
         >
-          {/* 标题左侧插槽 (若存在则不显示内置返回按钮) */}
-          {titleLeftSlot ||
-            (back && (
-              <LeftOutlined
-                className={cx(styles['icon-back'], 'cursor-pointer')}
-                onClick={handleBack}
-              />
-            ))}
-          <h3 className={cx(styles.title)}>
-            {title || ''}
-            {tips && (
-              <Tooltip title={tips}>
-                <QuestionCircleOutlined className={cx(styles['tips-icon'])} />
-              </Tooltip>
+          <div
+            className={cx(
+              styles['header-left'],
+              'flex',
+              'items-center',
+              'gap-2',
             )}
-          </h3>
-          {/* 标题右侧插槽 */}
-          {leftSlot}
+          >
+            {/* 标题左侧插槽 (若存在则不显示内置返回按钮) */}
+            {titleLeftSlot ||
+              (back && (
+                <LeftOutlined
+                  className={cx(styles['icon-back'], 'cursor-pointer')}
+                  onClick={handleBack}
+                />
+              ))}
+            <h3 className={cx(styles.title)}>
+              {title || ''}
+              {tips && (
+                <Tooltip title={tips}>
+                  <QuestionCircleOutlined className={cx(styles['tips-icon'])} />
+                </Tooltip>
+              )}
+            </h3>
+            {/* 标题右侧插槽 */}
+            {leftSlot}
+          </div>
+          <div>
+            {/* 中间区域插槽 */}
+            {centerSlot}
+          </div>
+          <div className={cx(styles['header-right'])}>
+            {/* 右侧区域插槽 */}
+            {rightSlot}
+          </div>
         </div>
-        <div>
-          {/* 中间区域插槽 */}
-          {centerSlot}
-        </div>
-        <div className={cx(styles['header-right'])}>
-          {/* 右侧区域插槽 */}
-          {rightSlot}
-        </div>
-      </div>
+      )}
       <div
         className={cx(
           styles.content,

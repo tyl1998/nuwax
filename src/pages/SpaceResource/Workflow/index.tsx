@@ -203,37 +203,7 @@ const SpaceWorkflow: React.FC = () => {
   };
 
   return (
-    <WorkspaceLayout
-      title={dict('PC.Pages.SpacePluginWorkflow.workflowPageTitle')}
-      rightSlot={
-        <>
-          <UploadImportConfig
-            spaceId={spaceId}
-            onUploadSuccess={() => runComponent(spaceId)}
-          />
-          {/* 分组功能已禁用
-          <Button
-            icon={<PlusOutlined />}
-            onClick={() => {
-              setGroupModalMode('add');
-              setEditingGroup(null);
-              setIsGroupModalOpen(true);
-            }}
-          >
-            {dict('PC.Pages.AntvX6NodeItem.addGroup')}
-          </Button>
-          */}
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => setOpenWorkflow(true)}
-          >
-            {dict('PC.Pages.AgentArrangeConfig.addWorkflow')}
-          </Button>
-        </>
-      }
-      hideScroll
-    >
+    <WorkspaceLayout hideHeader contentPadding="16px 16px 16px 24px" hideScroll>
       {/* 分组功能已禁用
       <HorizontalGroupList
         spaceId={spaceId}
@@ -255,8 +225,36 @@ const SpaceWorkflow: React.FC = () => {
 
       <HeaderArea
         spaceId={spaceId}
+        title={dict('PC.Pages.SpacePluginWorkflow.workflowPageTitle')}
         selectedGroupType={selectedGroupType}
         onFilterChange={handleFilterList}
+        actionSlot={
+          <>
+            <UploadImportConfig
+              spaceId={spaceId}
+              onUploadSuccess={() => runComponent(spaceId)}
+            />
+            {/* 分组功能已禁用
+            <Button
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setGroupModalMode('add');
+                setEditingGroup(null);
+                setIsGroupModalOpen(true);
+              }}
+            >
+              {dict('PC.Pages.AntvX6NodeItem.addGroup')}
+            </Button>
+            */}
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => setOpenWorkflow(true)}
+            >
+              {dict('PC.Pages.AgentArrangeConfig.addWorkflow')}
+            </Button>
+          </>
+        }
       />
 
       <ComponentList

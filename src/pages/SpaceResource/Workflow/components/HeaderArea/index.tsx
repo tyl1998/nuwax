@@ -17,6 +17,7 @@ const cx = classNames.bind(styles);
 
 interface HeaderAreaProps {
   spaceId: number;
+  title: React.ReactNode;
   selectedGroupType?: string;
   onFilterChange: (
     type: ComponentTypeEnum,
@@ -24,9 +25,14 @@ interface HeaderAreaProps {
     create: CreateListEnum,
     keyword: string,
   ) => void;
+  actionSlot?: React.ReactNode;
 }
 
-const HeaderArea: React.FC<HeaderAreaProps> = ({ onFilterChange }) => {
+const HeaderArea: React.FC<HeaderAreaProps> = ({
+  title,
+  actionSlot,
+  onFilterChange,
+}) => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -72,6 +78,7 @@ const HeaderArea: React.FC<HeaderAreaProps> = ({ onFilterChange }) => {
   return (
     <div className={cx(styles['header-area'])}>
       <div className={cx(styles['header-left'])}>
+        <h3 className={cx(styles.title)}>{title}</h3>
         <ButtonToggle
           options={CREATE_LIST}
           value={create}
@@ -113,6 +120,7 @@ const HeaderArea: React.FC<HeaderAreaProps> = ({ onFilterChange }) => {
           }}
           style={{ width: 214 }}
         />
+        {actionSlot}
       </div>
     </div>
   );
