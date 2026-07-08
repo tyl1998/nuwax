@@ -15,8 +15,9 @@ import { Button } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useModel, useParams, useRequest } from 'umi';
 import ComponentList from '../components/ComponentList';
-import GroupEditModal from '../components/GroupEditModal';
-import HorizontalGroupList from '../components/HorizontalGroupList';
+// 分组功能已禁用
+// import GroupEditModal from '../components/GroupEditModal';
+// import HorizontalGroupList from '../components/HorizontalGroupList';
 import HeaderArea from './components/HeaderArea';
 
 const ALLOWED_TYPES = new Set([
@@ -41,12 +42,13 @@ const SpaceWorkflow: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openWorkflow, setOpenWorkflow] = useState(false);
 
-  // 分组管理弹窗状态
-  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
-  const [groupModalMode, setGroupModalMode] = useState<'add' | 'edit'>('add');
-  const [editingGroup, setEditingGroup] = useState<any>(null);
+  // 分组管理弹窗状态（分组功能已禁用）
+  // const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  // const [groupModalMode, setGroupModalMode] = useState<'add' | 'edit'>('add');
+  // const [editingGroup, setEditingGroup] = useState<any>(null);
 
   // 顶部筛选类型状态，默认为工作流
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [type, setType] = useState<ComponentTypeEnum>(
     ComponentTypeEnum.Workflow,
   );
@@ -122,6 +124,7 @@ const SpaceWorkflow: React.FC = () => {
     setComponentList(_list);
   };
 
+  /* 分组功能已禁用
   const handleGroupChange = (id: number, groupType?: string) => {
     workflowGroupMemoryCache[spaceId] = { groupId: id, groupType };
     setGroupId(id);
@@ -134,7 +137,9 @@ const SpaceWorkflow: React.FC = () => {
     } = filterParamsRef.current;
     handleFilterList(currentType, status, create, keyword, id);
   };
+  */
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [refreshGroupTrigger, setRefreshGroupTrigger] = useState(0);
 
   const { run: runComponent } = useRequest(apiComponentList, {
@@ -206,6 +211,7 @@ const SpaceWorkflow: React.FC = () => {
             spaceId={spaceId}
             onUploadSuccess={() => runComponent(spaceId)}
           />
+          {/* 分组功能已禁用
           <Button
             icon={<PlusOutlined />}
             onClick={() => {
@@ -216,6 +222,7 @@ const SpaceWorkflow: React.FC = () => {
           >
             {dict('PC.Pages.AntvX6NodeItem.addGroup')}
           </Button>
+          */}
           <Button
             type="primary"
             icon={<PlusOutlined />}
@@ -227,6 +234,7 @@ const SpaceWorkflow: React.FC = () => {
       }
       hideScroll
     >
+      {/* 分组功能已禁用
       <HorizontalGroupList
         spaceId={spaceId}
         value={groupId}
@@ -243,6 +251,7 @@ const SpaceWorkflow: React.FC = () => {
           runComponent(spaceId);
         }}
       />
+      */}
 
       <HeaderArea
         spaceId={spaceId}
@@ -265,6 +274,7 @@ const SpaceWorkflow: React.FC = () => {
         defaultGroupId={groupId !== 0 ? groupId : undefined}
       />
 
+      {/* 分组功能已禁用
       <GroupEditModal
         open={isGroupModalOpen}
         mode={groupModalMode}
@@ -277,6 +287,7 @@ const SpaceWorkflow: React.FC = () => {
           setRefreshGroupTrigger((prev) => prev + 1);
         }}
       />
+      */}
     </WorkspaceLayout>
   );
 };

@@ -15,8 +15,9 @@ import { Button } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useModel, useParams, useRequest } from 'umi';
 import ComponentList from '../components/ComponentList';
-import GroupEditModal from '../components/GroupEditModal';
-import HorizontalGroupList from '../components/HorizontalGroupList';
+// 分组功能已禁用
+// import GroupEditModal from '../components/GroupEditModal';
+// import HorizontalGroupList from '../components/HorizontalGroupList';
 import HeaderArea from './components/HeaderArea';
 
 const ALLOWED_TYPES = new Set([
@@ -41,12 +42,13 @@ const SpacePlugin: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [openPlugin, setOpenPlugin] = useState(false);
 
-  // 分组管理弹窗状态
-  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
-  const [groupModalMode, setGroupModalMode] = useState<'add' | 'edit'>('add');
-  const [editingGroup, setEditingGroup] = useState<any>(null);
+  // 分组管理弹窗状态（分组功能已禁用）
+  // const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  // const [groupModalMode, setGroupModalMode] = useState<'add' | 'edit'>('add');
+  // const [editingGroup, setEditingGroup] = useState<any>(null);
 
   // 顶部筛选类型状态，默认为插件
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [type, setType] = useState<ComponentTypeEnum>(ComponentTypeEnum.Plugin);
 
   // 资源分组状态，0 表示全部
@@ -118,6 +120,7 @@ const SpacePlugin: React.FC = () => {
     setComponentList(_list);
   };
 
+  /* 分组功能已禁用
   const handleGroupChange = (id: number, groupType?: string) => {
     pluginGroupMemoryCache[spaceId] = { groupId: id, groupType };
     setGroupId(id);
@@ -130,7 +133,9 @@ const SpacePlugin: React.FC = () => {
     } = filterParamsRef.current;
     handleFilterList(currentType, status, create, keyword, id);
   };
+  */
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [refreshGroupTrigger, setRefreshGroupTrigger] = useState(0);
   const isFirstLoadRef = useRef(true);
 
@@ -203,6 +208,7 @@ const SpacePlugin: React.FC = () => {
             spaceId={spaceId}
             onUploadSuccess={() => runComponent(spaceId)}
           />
+          {/* 分组功能已禁用
           <Button
             icon={<PlusOutlined />}
             onClick={() => {
@@ -213,6 +219,7 @@ const SpacePlugin: React.FC = () => {
           >
             {dict('PC.Pages.AntvX6NodeItem.addGroup')}
           </Button>
+          */}
           <Button
             type="primary"
             icon={<PlusOutlined />}
@@ -224,6 +231,7 @@ const SpacePlugin: React.FC = () => {
       }
       hideScroll
     >
+      {/* 分组功能已禁用
       <HorizontalGroupList
         spaceId={spaceId}
         value={groupId}
@@ -240,6 +248,7 @@ const SpacePlugin: React.FC = () => {
           runComponent(spaceId);
         }}
       />
+      */}
 
       <HeaderArea
         spaceId={spaceId}
@@ -262,6 +271,7 @@ const SpacePlugin: React.FC = () => {
         defaultGroupId={groupId !== 0 ? groupId : undefined}
       />
 
+      {/* 分组功能已禁用
       <GroupEditModal
         open={isGroupModalOpen}
         mode={groupModalMode}
@@ -274,6 +284,7 @@ const SpacePlugin: React.FC = () => {
           setRefreshGroupTrigger((prev) => prev + 1);
         }}
       />
+      */}
     </WorkspaceLayout>
   );
 };
