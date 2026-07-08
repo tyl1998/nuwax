@@ -8,14 +8,16 @@ import {
   PLUGIN_CREATE_TOOL,
 } from '@/constants/library.constants';
 import { dict } from '@/services/i18nRuntime';
-import {
-  apiAddResourceToGroup,
-  apiResourceGroupList,
-} from '@/services/library';
+// 分组功能已禁用
+// import {
+//   apiAddResourceToGroup,
+//   apiResourceGroupList,
+// } from '@/services/library';
 import { apiPluginAdd, apiPluginHttpUpdate } from '@/services/plugin';
 import { CreateUpdateModeEnum } from '@/types/enums/common';
 import { PluginTypeEnum } from '@/types/enums/plugin';
-import { ComponentTypeEnum } from '@/types/enums/space';
+// 分组功能已禁用
+// import { ComponentTypeEnum } from '@/types/enums/space';
 import type { CreateNewPluginProps } from '@/types/interfaces/library';
 import type {
   PluginAddParams,
@@ -23,7 +25,7 @@ import type {
 } from '@/types/interfaces/plugin';
 import { customizeRequiredMark } from '@/utils/form';
 import type { FormProps, RadioChangeEvent } from 'antd';
-import { Form, Input, message, Radio, Select } from 'antd';
+import { Form, Input, message, Radio } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { history, useRequest } from 'umi';
@@ -44,7 +46,7 @@ const CreateNewPlugin: React.FC<CreateNewPluginProps> = ({
   open,
   onCancel,
   onConfirm,
-  defaultGroupId,
+  // defaultGroupId, // 分组功能已禁用
 }) => {
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState<string>('');
@@ -57,13 +59,14 @@ const CreateNewPlugin: React.FC<CreateNewPluginProps> = ({
       form.setFieldsValue({
         name,
         description,
-        groupId:
-          mode === CreateUpdateModeEnum.Create
-            ? defaultGroupId || undefined
-            : undefined,
+        // 分组功能已禁用
+        // groupId:
+        //   mode === CreateUpdateModeEnum.Create
+        //     ? defaultGroupId || undefined
+        //     : undefined,
       });
     }
-  }, [open, icon, name, description, defaultGroupId, mode]);
+  }, [open, icon, name, description, mode]);
 
   // 根据type类型，判断插件跳转路径
   const handlePluginUrl = (id: number, type: PluginTypeEnum) => {
@@ -74,39 +77,41 @@ const CreateNewPlugin: React.FC<CreateNewPluginProps> = ({
     }
   };
 
-  const [groupOptions, setGroupOptions] = useState<any[]>([]);
+  // 分组功能已禁用
+  // const [groupOptions, setGroupOptions] = useState<any[]>([]);
 
-  // 拉取资源分组列表
-  useEffect(() => {
-    if (open && mode === CreateUpdateModeEnum.Create && spaceId) {
-      apiResourceGroupList({
-        spaceId,
-        types: [ComponentTypeEnum.Plugin],
-      })
-        .then((res) => {
-          if (res.success && res.data) {
-            setGroupOptions(res.data || []);
-          }
-        })
-        .catch(() => {});
-    }
-  }, [open, mode, spaceId]);
+  // // 拉取资源分组列表
+  // useEffect(() => {
+  //   if (open && mode === CreateUpdateModeEnum.Create && spaceId) {
+  //     apiResourceGroupList({
+  //       spaceId,
+  //       types: [ComponentTypeEnum.Plugin],
+  //     })
+  //       .then((res) => {
+  //         if (res.success && res.data) {
+  //           setGroupOptions(res.data || []);
+  //         }
+  //       })
+  //       .catch(() => {});
+  //   }
+  // }, [open, mode, spaceId]);
 
   // 新增插件接口
   const { run: runCreate } = useRequest(apiPluginAdd, {
     manual: true,
     debounceInterval: 300,
     onSuccess: async (result: number, params: PluginAddParams[]) => {
-      // 校验如果用户选择了分组，则先执行移入分组操作
-      const targetGroupId = form.getFieldValue('groupId');
-      if (targetGroupId) {
-        try {
-          await apiAddResourceToGroup(targetGroupId, {
-            targetType: ComponentTypeEnum.Plugin,
-            targetId: result,
-          });
-        } catch (e) {}
-      }
+      // 分组功能已禁用
+      // // 校验如果用户选择了分组，则先执行移入分组操作
+      // const targetGroupId = form.getFieldValue('groupId');
+      // if (targetGroupId) {
+      //   try {
+      //     await apiAddResourceToGroup(targetGroupId, {
+      //       targetType: ComponentTypeEnum.Plugin,
+      //       targetId: result,
+      //     });
+      //   } catch (e) {}
+      // }
 
       setImageUrl('');
       // 关闭弹窗
@@ -292,6 +297,7 @@ const CreateNewPlugin: React.FC<CreateNewPluginProps> = ({
                 <SelectList options={CLOUD_BASE_CODE_OPTIONS} />
               </Form.Item>
             </ConditionRender>
+            {/* 分组功能已禁用
             <Form.Item
               name="groupId"
               label={dict('PC.Pages.SpaceResource.LeftGroupList.selectGroup')}
@@ -307,6 +313,7 @@ const CreateNewPlugin: React.FC<CreateNewPluginProps> = ({
                 }))}
               />
             </Form.Item>
+            */}
           </ConditionRender>
         </Form>
       </div>

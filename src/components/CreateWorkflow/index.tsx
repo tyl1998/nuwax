@@ -1,17 +1,19 @@
 import workflowIcon from '@/assets/images/workflow_image.png';
-import ConditionRender from '@/components/ConditionRender';
+// 分组功能已禁用：ConditionRender 仅用于分组选择框，已注释
+// import ConditionRender from '@/components/ConditionRender';
 import CustomFormModal from '@/components/CustomFormModal';
 import OverrideTextArea from '@/components/OverrideTextArea';
 import UploadAvatar from '@/components/UploadAvatar';
 import { dict } from '@/services/i18nRuntime';
 import {
-  apiAddResourceToGroup,
+  // apiAddResourceToGroup, // 分组功能已禁用
   apiAddWorkflow,
-  apiResourceGroupList,
+  // apiResourceGroupList,
   apiUpdateWorkflow,
 } from '@/services/library';
 import { CreateUpdateModeEnum } from '@/types/enums/common';
-import { ComponentTypeEnum } from '@/types/enums/space';
+// 分组功能已禁用
+// import { ComponentTypeEnum } from '@/types/enums/space';
 import type {
   CreateWorkflowProps,
   UpdateWorkflowParams,
@@ -19,7 +21,7 @@ import type {
 } from '@/types/interfaces/library';
 import { customizeRequiredMark } from '@/utils/form';
 import type { FormProps } from 'antd';
-import { Form, Input, message, Select } from 'antd';
+import { Form, Input, message } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { history, useRequest } from 'umi';
@@ -41,43 +43,45 @@ const CreateWorkflow: React.FC<CreateWorkflowProps> = ({
   onCancel,
   onConfirm,
   onUpdate,
-  defaultGroupId,
+  // defaultGroupId, // 分组功能已禁用
 }) => {
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState<string>('');
-  const [groupOptions, setGroupOptions] = useState<any[]>([]);
+  // 分组功能已禁用
+  // const [groupOptions, setGroupOptions] = useState<any[]>([]);
 
-  // 拉取资源分组列表
-  useEffect(() => {
-    if (open && type === CreateUpdateModeEnum.Create && spaceId) {
-      apiResourceGroupList({
-        spaceId,
-        types: [ComponentTypeEnum.Workflow],
-      })
-        .then((res) => {
-          if (res.success && res.data) {
-            setGroupOptions(res.data || []);
-          }
-        })
-        .catch(() => {});
-    }
-  }, [open, type, spaceId]);
+  // // 拉取资源分组列表
+  // useEffect(() => {
+  //   if (open && type === CreateUpdateModeEnum.Create && spaceId) {
+  //     apiResourceGroupList({
+  //       spaceId,
+  //       types: [ComponentTypeEnum.Workflow],
+  //     })
+  //       .then((res) => {
+  //         if (res.success && res.data) {
+  //           setGroupOptions(res.data || []);
+  //         }
+  //       })
+  //       .catch(() => {});
+  //   }
+  // }, [open, type, spaceId]);
 
   // 新增工作流
   const { run } = useRequest(apiAddWorkflow, {
     manual: true,
     debounceInterval: 300,
     onSuccess: async (result: number) => {
-      // 校验如果用户选择了分组，则先执行移入分组操作
-      const targetGroupId = form.getFieldValue('groupId');
-      if (targetGroupId) {
-        try {
-          await apiAddResourceToGroup(targetGroupId, {
-            targetType: ComponentTypeEnum.Workflow,
-            targetId: result,
-          });
-        } catch (e) {}
-      }
+      // 分组功能已禁用
+      // // 校验如果用户选择了分组，则先执行移入分组操作
+      // const targetGroupId = form.getFieldValue('groupId');
+      // if (targetGroupId) {
+      //   try {
+      //     await apiAddResourceToGroup(targetGroupId, {
+      //       targetType: ComponentTypeEnum.Workflow,
+      //       targetId: result,
+      //     });
+      //   } catch (e) {}
+      // }
 
       message.success(dict('PC.Components.CreateWorkflow.workflowCreated'));
       onCancel();
@@ -103,13 +107,14 @@ const CreateWorkflow: React.FC<CreateWorkflowProps> = ({
       form.setFieldsValue({
         name,
         description,
-        groupId:
-          type === CreateUpdateModeEnum.Create
-            ? defaultGroupId || undefined
-            : undefined,
+        // 分组功能已禁用
+        // groupId:
+        //   type === CreateUpdateModeEnum.Create
+        //     ? defaultGroupId || undefined
+        //     : undefined,
       });
     }
-  }, [open, icon, name, description, defaultGroupId, type]);
+  }, [open, icon, name, description, type]);
 
   const onFinish: FormProps<{
     name: string;
@@ -241,6 +246,7 @@ const CreateWorkflow: React.FC<CreateWorkflowProps> = ({
             svgIconName="icons-workspace-workflow"
           />
         </Form.Item>
+        {/* 分组功能已禁用
         <ConditionRender condition={type === CreateUpdateModeEnum.Create}>
           <Form.Item
             name="groupId"
@@ -258,6 +264,7 @@ const CreateWorkflow: React.FC<CreateWorkflowProps> = ({
             />
           </Form.Item>
         </ConditionRender>
+        */}
       </Form>
     </CustomFormModal>
   );
