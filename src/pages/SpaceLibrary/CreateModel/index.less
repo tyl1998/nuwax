@@ -33,11 +33,12 @@
 /** apiInfoList 单行：URL 加宽、操作列收窄 */
 .apiInfoRow {
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .apiInfoUrl {
-  flex: 3 1 300px;
-  min-width: 260px;
+  flex: 3 1 280px;
+  min-width: 240px;
   margin-bottom: 0 !important;
 
   :global(.ant-input) {
@@ -62,6 +63,17 @@
 
   :global(.ant-input-number) {
     width: 100%;
+  }
+}
+
+.apiInfoUseFullUrl {
+  flex: 0 0 auto;
+  min-width: 110px;
+  margin-bottom: 0 !important;
+  white-space: nowrap;
+
+  :global(.ant-form-item-label) {
+    padding: 0;
   }
 }
 
