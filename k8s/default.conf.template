@@ -9,6 +9,8 @@ server {
     listen  [::]:80;
     server_name  ${SERVER_NAME};
 
+    client_max_body_size 5m;
+
     charset utf-8;
 
     #access_log  /var/log/nginx/host.access.log  main;
