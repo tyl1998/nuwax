@@ -91,6 +91,8 @@ export interface ModelSaveParams extends ModelFormData {
     key: string;
     // 权重
     weight: number;
+    // 是否使用完整URL(免拼接)：true=直接使用url作为完整目标地址，不再追加请求路径
+    useFullUrl?: boolean;
   }[];
   // 向量维度
   dimension: string;

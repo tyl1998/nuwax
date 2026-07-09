@@ -3132,6 +3132,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.updateModel": "モデルの更新",
   "PC.Pages.SpaceLibrary.CreateModel.vectorDimension": "ベクトル次元",
   "PC.Pages.SpaceLibrary.CreateModel.weight": "重さ",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "URL結合なし",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "有効にすると、設定した完全なURLを転送先として直接使用し、リクエストパスを結合しません。カスタム全パスのサードパーティ端点に適しています",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "はい",
   "PC.Pages.SpaceLibrary.Index.addComponent": "成分",
   "PC.Pages.SpaceLibrary.Index.addModel": "モデル",

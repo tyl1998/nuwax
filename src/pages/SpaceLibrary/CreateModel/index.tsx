@@ -40,6 +40,7 @@ import {
 } from '@ant-design/icons';
 import {
   Button,
+  Checkbox,
   Form,
   FormProps,
   Input,
@@ -1014,6 +1015,22 @@ const CreateModel: React.FC<CreateModelProps> = ({
                         'PC.Pages.SpaceLibrary.CreateModel.inputWeight',
                       )}
                     />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    label={
+                      key === 0
+                        ? dict('PC.Pages.SpaceLibrary.CreateModel.useFullUrl')
+                        : ''
+                    }
+                    name={[name, 'useFullUrl']}
+                    className={cx(styles.apiInfoUseFullUrl)}
+                    valuePropName="checked"
+                    tooltip={dict(
+                      'PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip',
+                    )}
+                  >
+                    <Checkbox />
                   </Form.Item>
                   <Form.Item
                     className={cx(styles.apiInfoActions)}

@@ -3278,6 +3278,8 @@ export const EN_US: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.updateModel": "Update Model",
   "PC.Pages.SpaceLibrary.CreateModel.vectorDimension": "Vector Dimension",
   "PC.Pages.SpaceLibrary.CreateModel.weight": "Weight",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "Use Full URL",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "When enabled, the configured full URL is used directly as the forwarding target without appending request path. For third-party endpoints with custom full paths",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "Yes",
   "PC.Pages.SpaceLibrary.Index.addComponent": "Component",
   "PC.Pages.SpaceLibrary.Index.addModel": "Model",

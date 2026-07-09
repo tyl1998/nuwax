@@ -3126,6 +3126,8 @@ export const ZH_HK: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.updateModel": "更新模型",
   "PC.Pages.SpaceLibrary.CreateModel.vectorDimension": "向量維度",
   "PC.Pages.SpaceLibrary.CreateModel.weight": "權重",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "免拼接URL",
+  "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "開啟後直接使用填寫的完整URL作為轉發目標，不再拼接請求路徑，適用於自定義全路徑的第三方介面",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "是",
   "PC.Pages.SpaceLibrary.Index.addComponent": "組件",
   "PC.Pages.SpaceLibrary.Index.addModel": "模型",
