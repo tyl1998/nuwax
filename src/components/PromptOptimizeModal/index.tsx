@@ -1,5 +1,6 @@
 import sendImage from '@/assets/images/send_image_gray.png';
 import PromptView from '@/components/ChatView/promptView';
+import OptimizeModelSelector from '@/components/OptimizeModelSelector';
 import { dict } from '@/services/i18nRuntime';
 import {
   OptimizeTypeEnum,
@@ -38,6 +39,7 @@ const PromptOptimizeModal: React.FC<
   type = PromptOptimizeTypeEnum.AGENT,
 }) => {
   const [message, setMessage] = useState<string>('');
+  const [modelId, setModelId] = useState<number>();
   const {
     messageList,
     setMessageList,
@@ -100,6 +102,8 @@ const PromptOptimizeModal: React.FC<
       type,
       // 智能体ID或工作流节点ID，可选
       id: targetId,
+      // 模型ID，可选，不传则使用租户默认对话模型
+      modelId,
     };
     onMessageSend(params, OptimizeTypeEnum.prompt);
   };
@@ -122,6 +126,8 @@ const PromptOptimizeModal: React.FC<
         type,
         // 智能体ID或工作流节点ID，可选
         id: targetId,
+        // 模型ID，可选，不传则使用租户默认对话模型
+        modelId,
       };
       onMessageSend(params, OptimizeTypeEnum.prompt);
       // 置空
@@ -197,6 +203,11 @@ const PromptOptimizeModal: React.FC<
         </Button>
       )}
       <div className={cx(styles.footer, 'flex', 'items-center')}>
+        <OptimizeModelSelector
+          value={modelId}
+          onChange={setModelId}
+          className={cx(styles['model-select'])}
+        />
         <div
           className={cx(styles['chat-input'], 'flex', 'items-center', 'w-full')}
         >

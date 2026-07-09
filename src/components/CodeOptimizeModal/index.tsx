@@ -1,5 +1,6 @@
 import sendImage from '@/assets/images/send_image_gray.png';
 import PromptView from '@/components/ChatView/promptView';
+import OptimizeModelSelector from '@/components/OptimizeModelSelector';
 import { dict } from '@/services/i18nRuntime';
 import { CodeLangEnum } from '@/types/enums/plugin';
 import {
@@ -25,6 +26,7 @@ const CodeOptimizeModal: React.FC<
   }
 > = ({ title, open, onCancel, onReplace, codeLanguage }) => {
   const [message, setMessage] = useState<string>('');
+  const [modelId, setModelId] = useState<number>();
   const {
     messageList,
     setMessageList,
@@ -78,6 +80,8 @@ const CodeOptimizeModal: React.FC<
         requestId: id,
         prompt: message,
         codeLanguage,
+        // 模型ID，可选，不传则使用租户默认对话模型
+        modelId,
       };
       onMessageSend(params, OptimizeTypeEnum.code);
     }
@@ -99,6 +103,8 @@ const CodeOptimizeModal: React.FC<
         requestId: id,
         prompt: message,
         codeLanguage,
+        // 模型ID，可选，不传则使用租户默认对话模型
+        modelId,
       };
       onMessageSend(params, OptimizeTypeEnum.code);
       // 置空
@@ -170,6 +176,11 @@ const CodeOptimizeModal: React.FC<
         <div />
       )}
       <div className={cx(styles.footer, 'flex', 'items-center')}>
+        <OptimizeModelSelector
+          value={modelId}
+          onChange={setModelId}
+          className={cx(styles['model-select'])}
+        />
         <div
           className={cx(styles['chat-input'], 'flex', 'items-center', 'w-full')}
         >

@@ -535,6 +535,8 @@ export const EN_US: SystemLangMap = {
   "PC.Components.ModelSelector.loadingModels": "Loading models...",
   "PC.Components.ModelSelector.noAvailableModels": "No available models",
   "PC.Components.ModelSelector.selectModel": "Select Model",
+  "PC.Components.OptimizeModelSelector.defaultModel": "Tenant Default Model",
+  "PC.Components.OptimizeModelSelector.selectModel": "Select Model",
   "PC.Components.ModelSetting.advancedSettings": "Advanced Settings",
   "PC.Components.ModelSetting.balancedMode": "Balanced",
   "PC.Components.ModelSetting.creativeMode": "Creative",

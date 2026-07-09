@@ -526,6 +526,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Components.ModelSelector.loadingModels": "モデルをロード中...",
   "PC.Components.ModelSelector.noAvailableModels": "利用可能なモデルはありません",
   "PC.Components.ModelSelector.selectModel": "モデルの選択",
+  "PC.Components.OptimizeModelSelector.defaultModel": "テナント既定モデル",
+  "PC.Components.OptimizeModelSelector.selectModel": "モデルの選択",
   "PC.Components.ModelSetting.advancedSettings": "詳細設定",
   "PC.Components.ModelSetting.balancedMode": "バランスの取れた",
   "PC.Components.ModelSetting.creativeMode": "クリエイティブ",

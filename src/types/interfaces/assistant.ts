@@ -32,6 +32,8 @@ export interface PromptOptimizeParams {
   type?: PromptOptimizeTypeEnum;
   // 智能体ID或工作流节点ID，可选
   id?: number;
+  // 模型ID，可选，不传则使用租户默认对话模型
+  modelId?: number;
 }
 
 // sql生成请求参数
@@ -54,6 +56,8 @@ export interface CodeCreateParams {
   prompt: string;
   // 语言,可用值:Python,JavaScript
   codeLanguage: CodeLangEnum;
+  // 模型ID，可选，不传则使用租户默认对话模型
+  modelId?: number;
 }
 
 // 参数接口

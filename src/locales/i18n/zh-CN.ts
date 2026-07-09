@@ -535,6 +535,8 @@ export const ZH_CN: SystemLangMap = {
   "PC.Components.ModelSelector.loadingModels": "加载模型中...",
   "PC.Components.ModelSelector.noAvailableModels": "暂无可用自有模型",
   "PC.Components.ModelSelector.selectModel": "选择模型",
+  "PC.Components.OptimizeModelSelector.defaultModel": "租户默认模型",
+  "PC.Components.OptimizeModelSelector.selectModel": "选择模型",
   "PC.Components.ModelSetting.advancedSettings": "高级设置",
   "PC.Components.ModelSetting.balancedMode": "平衡模式",
   "PC.Components.ModelSetting.creativeMode": "创意模式",
