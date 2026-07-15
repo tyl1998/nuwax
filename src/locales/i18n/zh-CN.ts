@@ -3280,6 +3280,8 @@ export const ZH_CN: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.weight": "权重",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "免拼接URL",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "开启后直接使用填写的完整URL作为转发目标，不再拼接请求路径，适用于自定义全路径的第三方接口",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding": "多模态向量",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip": "开启后按多模态向量模型处理(如豆包 doubao-embedding-vision)：input 使用类型化对象、响应按多模态格式解析，需将接口地址填为多模态 endpoint(如 .../api/v3/embeddings/multimodal)",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "是",
   "PC.Pages.SpaceLibrary.Index.addComponent": "组件",
   "PC.Pages.SpaceLibrary.Index.addModel": "模型",

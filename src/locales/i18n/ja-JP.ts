@@ -3134,6 +3134,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.weight": "重さ",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "URL結合なし",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "有効にすると、設定した完全なURLを転送先として直接使用し、リクエストパスを結合しません。カスタム全パスのサードパーティ端点に適しています",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding": "多モーダルベクトル",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip": "有効にすると多モーダルベクトルモデル(例: 豆包 doubao-embedding-vision)として処理します。input は型付きオブジェクト、応答は多モーダル形式で解析され、インターフェースURLは多モーダル endpoint(例: .../api/v3/embeddings/multimodal) を指定してください",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "はい",
   "PC.Pages.SpaceLibrary.Index.addComponent": "成分",
   "PC.Pages.SpaceLibrary.Index.addModel": "モデル",

@@ -2,7 +2,7 @@
 @import '@/styles/token';
 
 .container {
-  width: 600px;
+  width: 100%;
   border-radius: 10px !important;
 
   .body {
@@ -30,10 +30,10 @@
   font-weight: @fontWeightStrong;
 }
 
-/** apiInfoList 单行：URL 加宽、操作列收窄 */
+/** apiInfoList 单行：URL 加宽、操作列收窄；整行保持一行不换行 */
 .apiInfoRow {
   width: 100%;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .apiInfoUrl {
@@ -67,6 +67,17 @@
 }
 
 .apiInfoUseFullUrl {
+  flex: 0 0 auto;
+  min-width: 110px;
+  margin-bottom: 0 !important;
+  white-space: nowrap;
+
+  :global(.ant-form-item-label) {
+    padding: 0;
+  }
+}
+
+.apiInfoMultimodal {
   flex: 0 0 auto;
   min-width: 110px;
   margin-bottom: 0 !important;

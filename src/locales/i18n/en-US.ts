@@ -3280,6 +3280,8 @@ export const EN_US: SystemLangMap = {
   "PC.Pages.SpaceLibrary.CreateModel.weight": "Weight",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrl": "Use Full URL",
   "PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip": "When enabled, the configured full URL is used directly as the forwarding target without appending request path. For third-party endpoints with custom full paths",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding": "Multimodal Embedding",
+  "PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip": "When enabled, treated as a multimodal embedding model (e.g. Doubao doubao-embedding-vision): input uses typed objects and the response is parsed in multimodal format. Set the interface URL to the multimodal endpoint (e.g. .../api/v3/embeddings/multimodal)",
   "PC.Pages.SpaceLibrary.CreateModel.yes": "Yes",
   "PC.Pages.SpaceLibrary.Index.addComponent": "Component",
   "PC.Pages.SpaceLibrary.Index.addModel": "Model",

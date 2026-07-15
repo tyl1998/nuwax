@@ -565,6 +565,7 @@ const CreateModel: React.FC<CreateModelProps> = ({
           : dict('PC.Pages.SpaceLibrary.CreateModel.updateModel')
       }
       open={open}
+      width={920}
       maskClosable={false}
       keyboard={false}
       classNames={{
@@ -1028,6 +1029,24 @@ const CreateModel: React.FC<CreateModelProps> = ({
                     valuePropName="checked"
                     tooltip={dict(
                       'PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip',
+                    )}
+                  >
+                    <Checkbox />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    label={
+                      key === 0
+                        ? dict(
+                            'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding',
+                          )
+                        : ''
+                    }
+                    name={[name, 'isMultimodalEmbedding']}
+                    className={cx(styles.apiInfoMultimodal)}
+                    valuePropName="checked"
+                    tooltip={dict(
+                      'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip',
                     )}
                   >
                     <Checkbox />
