@@ -241,15 +241,21 @@ const CreateModel: React.FC<CreateModelProps> = ({
 
   const onFinish: FormProps<ModelFormData>['onFinish'] = (values) => {
     setLoading(true);
+    // 将顶层「多模态向量」开关写入每条 apiInfo，便于后端按接口维度识别
+    const apiInfoList = (values.apiInfoList ?? []).map((item) => ({
+      ...item,
+      isMultimodalEmbedding: Boolean(values.isMultimodalEmbedding),
+    }));
+    const payload = { ...values, apiInfoList };
     if (mode === CreateUpdateModeEnum.Create) {
       run({
-        ...values,
+        ...payload,
         spaceId,
       });
     } else {
       // 更新模型
       run({
-        ...values,
+        ...payload,
         id,
         spaceId,
       });
@@ -780,6 +786,41 @@ const CreateModel: React.FC<CreateModelProps> = ({
               <InputNumber className={cx('w-full')} min={0} />
             </Form.Item>
           </ConditionRender>
+
+          {/* 多模态向量：仅当模型类型为文本向量时展示 */}
+          <ConditionRender
+            condition={modelTypes?.includes(
+              ModelCapabilityTypeEnum.TextEmbedding,
+            )}
+          >
+            <Form.Item
+              name="isMultimodalEmbedding"
+              label={dict(
+                'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding',
+              )}
+              className={cx('flex-1')}
+              tooltip={dict(
+                'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip',
+              )}
+              initialValue={false}
+            >
+              <Select
+                options={[
+                  {
+                    label: dict('PC.Pages.SpaceLibrary.CreateModel.yes'),
+                    value: true,
+                  },
+                  {
+                    label: dict('PC.Pages.SpaceLibrary.CreateModel.no'),
+                    value: false,
+                  },
+                ]}
+                placeholder={dict(
+                  'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding',
+                )}
+              />
+            </Form.Item>
+          </ConditionRender>
         </div>
 
         {/* 文本模型或多模态模型时显示 */}
@@ -1029,24 +1070,6 @@ const CreateModel: React.FC<CreateModelProps> = ({
                     valuePropName="checked"
                     tooltip={dict(
                       'PC.Pages.SpaceLibrary.CreateModel.useFullUrlTip',
-                    )}
-                  >
-                    <Checkbox />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    label={
-                      key === 0
-                        ? dict(
-                            'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbedding',
-                          )
-                        : ''
-                    }
-                    name={[name, 'isMultimodalEmbedding']}
-                    className={cx(styles.apiInfoMultimodal)}
-                    valuePropName="checked"
-                    tooltip={dict(
-                      'PC.Pages.SpaceLibrary.CreateModel.isMultimodalEmbeddingTip',
                     )}
                   >
                     <Checkbox />

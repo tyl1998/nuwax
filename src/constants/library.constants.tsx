@@ -424,10 +424,10 @@ export const MODEL_TYPE_LIST = [
     value: ModelCapabilityTypeEnum.TextEmbedding,
     label: dict('PC.Constants.Library.capabilityTextEmbedding'),
   },
-  // {
-  //   value: ModelCapabilityTypeEnum.MultiEmbedding,
-  //   label: dict('PC.Constants.Library.capabilityMultiEmbedding'),
-  // },
+  {
+    value: ModelCapabilityTypeEnum.MultiEmbedding,
+    label: dict('PC.Constants.Library.capabilityMultiEmbedding'),
+  },
   {
     value: ModelCapabilityTypeEnum.Reasoning,
     label: dict('PC.Constants.Library.capabilityReasoning'),

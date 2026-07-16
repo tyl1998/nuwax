@@ -73,6 +73,10 @@ export interface ModelFormData {
   accessControl?: AccessControlEnum;
   // 可用范围
   usageScenarios?: ModelUsageScenarioEnum[];
+  // 向量维度
+  dimension?: string;
+  // 是否多模态向量模型(图文/视频)：true=使用类型化 input 与多模态响应解析
+  isMultimodalEmbedding?: boolean;
 }
 
 // 在空间中添加或更新模型配置输入参数
