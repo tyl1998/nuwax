@@ -184,6 +184,21 @@ const CreateModel: React.FC<CreateModelProps> = ({
     onSuccess: (result: ModelConfigInfo) => {
       form.setFieldsValue(result);
       setModelTypes(result?.types as ModelCapabilityTypeEnum[] | null);
+      // API 按接口维度存储 isMultimodalEmbedding，前端用顶层开关控制，需要从首条回填
+      const firstApiInfo = result?.apiInfoList?.[0];
+      if (firstApiInfo?.isMultimodalEmbedding !== undefined) {
+        form.setFieldsValue({
+          isMultimodalEmbedding: firstApiInfo.isMultimodalEmbedding,
+        });
+      }
+      // setFieldsValue 对 Form.List 嵌套数据可能不触发 Form.useWatch 变更，
+      // 显式触发验证以确保 submittable 状态正确
+      requestAnimationFrame(() => {
+        form
+          .validateFields({ validateOnly: true })
+          .then(() => setSubmittable(true))
+          .catch(() => setSubmittable(false));
+      });
     },
   });
 
