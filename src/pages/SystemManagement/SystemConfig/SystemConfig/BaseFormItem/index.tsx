@@ -126,6 +126,55 @@ export default function BaseFormItem({
       },
     ],
   };
+  // 防呆：知识库向量化模型仅允许向量模型，文档预处理模型仅允许对话/多模态模型
+  const modelSettingRules: Rule[] = (() => {
+    if (props.name === 'defaultEmbedModelId') {
+      return [
+        {
+          validator: (_: any, value: number) => {
+            const m = modelList.find((v) => v.id === value);
+            if (
+              value !== null &&
+              value !== undefined &&
+              m &&
+              m.type !== 'Embeddings'
+            ) {
+              return Promise.reject(
+                new Error(
+                  t('PC.Pages.SystemConfigBaseFormItem.embedModelOnly'),
+                ),
+              );
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    }
+    if (props.name === 'defaultKnowledgeModelId') {
+      return [
+        {
+          validator: (_: any, value: number) => {
+            const m = modelList.find((v) => v.id === value);
+            if (
+              value !== null &&
+              value !== undefined &&
+              m &&
+              m.type !== 'Chat' &&
+              m.type !== 'Multi'
+            ) {
+              return Promise.reject(
+                new Error(
+                  t('PC.Pages.SystemConfigBaseFormItem.knowledgeModelOnly'),
+                ),
+              );
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    }
+    return [];
+  })();
   // 处理 Select 类型的初始值：-1 表示未选择，应转换为 undefined
   const getInitialValue = () => {
     if (['Select'].includes(props.inputType) && Number(props.value) === -1) {
@@ -145,7 +194,9 @@ export default function BaseFormItem({
       key={props.name}
       name={props.name}
       initialValue={getInitialValue()}
-      rules={rules[currentTab]}
+      rules={
+        currentTab === 'ModelSetting' ? modelSettingRules : rules[currentTab]
+      }
       {...(props.inputType === 'MultiInput'
         ? {
             label: <MultiInputLabel />,
@@ -210,7 +261,21 @@ export default function BaseFormItem({
             const mode =
               props.inputType === 'MultiSelect' ? 'multiple' : undefined;
             if (currentTab === 'ModelSetting') {
-              options = modelList.map((v) => ({ label: v.name, value: v.id }));
+              const allModels = modelList.map((v) => ({
+                label: v.name,
+                value: v.id,
+                type: v.type,
+              }));
+              // 防呆：知识库向量化模型仅允许向量模型，知识库文档预处理模型仅允许对话/多模态模型
+              if (props.name === 'defaultEmbedModelId') {
+                options = allModels.filter((m) => m.type === 'Embeddings');
+              } else if (props.name === 'defaultKnowledgeModelId') {
+                options = allModels.filter(
+                  (m) => m.type === 'Chat' || m.type === 'Multi',
+                );
+              } else {
+                options = allModels;
+              }
             }
             if (currentTab === 'AgentSetting') {
               options = agentList.map((v) => ({

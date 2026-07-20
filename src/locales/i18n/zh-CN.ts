@@ -4003,6 +4003,8 @@ export const ZH_CN: SystemLangMap = {
   "PC.Pages.SystemConfig.pageTitle": "系统设置",
   "PC.Pages.SystemConfig.saveSuccess": "保存成功",
   "PC.Pages.SystemConfigBaseFormItem.enterDomain": "请输入域名",
+  "PC.Pages.SystemConfigBaseFormItem.embedModelOnly": "该配置仅支持选择向量模型（Embeddings）",
+  "PC.Pages.SystemConfigBaseFormItem.knowledgeModelOnly": "该配置仅支持选择对话/多模态模型（Chat、Multi），不可选择向量模型",
   "PC.Pages.SystemConfigCategoryManage.add": "添加",
   "PC.Pages.SystemConfigCategoryManage.addSuccessWithType": "{0}分类添加成功",
   "PC.Pages.SystemConfigCategoryManage.agent": "智能体",

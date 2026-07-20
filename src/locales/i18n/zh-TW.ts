@@ -3814,6 +3814,8 @@ export const ZH_TW: SystemLangMap = {
   "PC.Pages.SystemConfig.pageTitle": "系統設定",
   "PC.Pages.SystemConfig.saveSuccess": "儲存成功",
   "PC.Pages.SystemConfigBaseFormItem.enterDomain": "請輸入域名",
+  "PC.Pages.SystemConfigBaseFormItem.embedModelOnly": "該配置僅支援選擇向量模型（Embeddings）",
+  "PC.Pages.SystemConfigBaseFormItem.knowledgeModelOnly": "該配置僅支援選擇對話/多模態模型（Chat、Multi），不可選擇向量模型",
   "PC.Pages.SystemConfigCategoryManage.add": "新增",
   "PC.Pages.SystemConfigCategoryManage.addSuccessWithType": "{0}分類新增成功",
   "PC.Pages.SystemConfigCategoryManage.agent": "智慧體",

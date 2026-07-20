@@ -3799,6 +3799,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Pages.SystemConfig.pageTitle": "システム設定",
   "PC.Pages.SystemConfig.saveSuccess": "正常に保存されました",
   "PC.Pages.SystemConfigBaseFormItem.enterDomain": "ドメインを入力してください",
+  "PC.Pages.SystemConfigBaseFormItem.embedModelOnly": "この設定はベクトルモデル（Embeddings）のみ選択可能です",
+  "PC.Pages.SystemConfigBaseFormItem.knowledgeModelOnly": "この設定はチャット/マルチモーダルモデル（Chat、Multi）のみ選択可能で、ベクトルモデルは選択できません",
   "PC.Pages.SystemConfigCategoryManage.add": "追加",
   "PC.Pages.SystemConfigCategoryManage.addSuccessWithType": "{0} カテゴリが正常に追加されました",
   "PC.Pages.SystemConfigCategoryManage.agent": "エージェント",

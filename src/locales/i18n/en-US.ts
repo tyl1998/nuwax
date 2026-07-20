@@ -4003,6 +4003,8 @@ export const EN_US: SystemLangMap = {
   "PC.Pages.SystemConfig.pageTitle": "System Settings",
   "PC.Pages.SystemConfig.saveSuccess": "Saved successfully",
   "PC.Pages.SystemConfigBaseFormItem.enterDomain": "Please enter domain",
+  "PC.Pages.SystemConfigBaseFormItem.embedModelOnly": "This setting only accepts an embedding model (Embeddings)",
+  "PC.Pages.SystemConfigBaseFormItem.knowledgeModelOnly": "This setting only accepts a chat/multimodal model (Chat, Multi); embedding models are not allowed",
   "PC.Pages.SystemConfigCategoryManage.add": "Add",
   "PC.Pages.SystemConfigCategoryManage.addSuccessWithType": "{0} category added successfully",
   "PC.Pages.SystemConfigCategoryManage.agent": "Agent",
