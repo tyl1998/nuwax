@@ -257,6 +257,7 @@ export const JA_JP: SystemLangMap = {
   "PC.Components.CreateKnowledge.embeddingModelPlaceholder": "埋め込みモデルを選択してください",
   "PC.Components.CreateKnowledge.embeddingModelRequired": "埋め込みモデルを選択してください",
   "PC.Components.CreateKnowledge.embeddingModelTooltip": "埋め込みモデルはテキストをベクトルに変換するために使用され、これが検索の基礎となります。",
+  "PC.Components.CreateKnowledge.embeddingModelChangeWarning": "ベクトルモデルを変更するとベクトル次元が変化する可能性があります。保存後、システムは新しいモデルでベクトルコレクションを再構築し、既存のベクトルデータはクリアされて再埋め込みが必要になります。保存前にご確認ください。",
   "PC.Components.CreateKnowledge.iconLabel": "アイコン",
   "PC.Components.CreateKnowledge.nameLabel": "名前",
   "PC.Components.CreateKnowledge.namePlaceholder": "ナレッジベースに明確な名前を付けます",

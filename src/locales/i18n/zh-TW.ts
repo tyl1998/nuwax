@@ -257,6 +257,7 @@ export const ZH_TW: SystemLangMap = {
   "PC.Components.CreateKnowledge.embeddingModelPlaceholder": "請選擇向量模型",
   "PC.Components.CreateKnowledge.embeddingModelRequired": "請選擇向量模型",
   "PC.Components.CreateKnowledge.embeddingModelTooltip": "向量模型用於將文字轉換為向量，是檢索的基礎",
+  "PC.Components.CreateKnowledge.embeddingModelChangeWarning": "更換向量模型會導致向量維度可能變化，保存後系統將依新模型重建向量集合，原有向量資料會被清空並需要重新向量化，請確認後保存。",
   "PC.Components.CreateKnowledge.iconLabel": "圖示",
   "PC.Components.CreateKnowledge.nameLabel": "名稱",
   "PC.Components.CreateKnowledge.namePlaceholder": "給知識庫起一個清晰的名字",

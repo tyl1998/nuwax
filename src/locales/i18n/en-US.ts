@@ -264,6 +264,7 @@ export const EN_US: SystemLangMap = {
   "PC.Components.CreateKnowledge.embeddingModelPlaceholder": "Please select an embedding model",
   "PC.Components.CreateKnowledge.embeddingModelRequired": "Please select an embedding model",
   "PC.Components.CreateKnowledge.embeddingModelTooltip": "Embedding models are used to convert text to vectors, which is the basis for retrieval",
+  "PC.Components.CreateKnowledge.embeddingModelChangeWarning": "Changing the embedding model may change the vector dimension. After saving, the system will rebuild the vector collection with the new model, and the existing vector data will be cleared and need to be re-embedded. Please confirm before saving.",
   "PC.Components.CreateKnowledge.iconLabel": "Icon",
   "PC.Components.CreateKnowledge.nameLabel": "Name",
   "PC.Components.CreateKnowledge.namePlaceholder": "Give the knowledge base a clear name",

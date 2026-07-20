@@ -32,7 +32,7 @@ import type {
 } from '@/types/interfaces/knowledge';
 import { ModelConfigInfo } from '@/types/interfaces/model';
 import { customizeRequiredMark } from '@/utils/form';
-import { Form, FormProps, Input, message, Select } from 'antd';
+import { Alert, Form, FormProps, Input, message, Select } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -62,6 +62,12 @@ const CreateKnowledge: React.FC<CreateKnowledgeProps> = ({
   );
   // 模型列表
   const [modelConfigList, setModelConfigList] = useState<option[]>([]);
+  // 编辑模式下记录原始向量模型，用于检测是否被更换
+  const [originalEmbeddingModelId, setOriginalEmbeddingModelId] = useState<
+    number | undefined
+  >(undefined);
+  const [embeddingModelChanged, setEmbeddingModelChanged] =
+    useState<boolean>(false);
 
   // 文档内容提取方式
   const [dataParsingMethod, setDataParsingMethod] = useState<
@@ -120,6 +126,9 @@ const CreateKnowledge: React.FC<CreateKnowledgeProps> = ({
         embeddingModelId: knowledgeInfo.embeddingModelId,
         dataParsingMethod: knowledgeInfo.workflowId ? 'workflow' : 'default',
       });
+      // 记录编辑前的原始向量模型，用于判断是否更换
+      setOriginalEmbeddingModelId(knowledgeInfo.embeddingModelId);
+      setEmbeddingModelChanged(false);
       if (knowledgeInfo.workflowId) {
         setDataParsingMethod(knowledgeInfo.workflowId ? 'workflow' : 'default');
         setDataParsingMethodItem({
@@ -157,6 +166,9 @@ const CreateKnowledge: React.FC<CreateKnowledgeProps> = ({
       // 初始化默认数据
       setDataParsingMethod('default');
       setDataParsingMethodItem(null);
+      // 重置向量模型变更提示状态（避免重开弹窗时残留）
+      setEmbeddingModelChanged(false);
+      setOriginalEmbeddingModelId(undefined);
 
       // 初始化详情接口的数据
       if (knowledgeInfo) {
@@ -190,10 +202,22 @@ const CreateKnowledge: React.FC<CreateKnowledgeProps> = ({
   };
 
   // 监听值变化（只包含变化的值）
-  const onValuesChange = (changedValues: { dataParsingMethod: string }) => {
+  const onValuesChange = (changedValues: {
+    dataParsingMethod: string;
+    embeddingModelId: number;
+  }) => {
     if (changedValues.dataParsingMethod) {
       setDataParsingMethod(
         changedValues.dataParsingMethod as 'default' | 'workflow',
+      );
+    }
+    // 编辑模式下，检测向量模型是否被更换
+    if (
+      changedValues.embeddingModelId !== undefined &&
+      mode === CreateUpdateModeEnum.Update
+    ) {
+      setEmbeddingModelChanged(
+        changedValues.embeddingModelId !== originalEmbeddingModelId,
       );
     }
   };
@@ -321,6 +345,16 @@ const CreateKnowledge: React.FC<CreateKnowledgeProps> = ({
               allowClear
             />
           </Form.Item>
+          {mode === CreateUpdateModeEnum.Update && embeddingModelChanged && (
+            <Alert
+              type="warning"
+              showIcon
+              style={{ marginBottom: 16 }}
+              message={dict(
+                'PC.Components.CreateKnowledge.embeddingModelChangeWarning',
+              )}
+            />
+          )}
 
           <Form.Item
             name="dataParsingMethod"
