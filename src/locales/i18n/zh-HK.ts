@@ -1894,6 +1894,8 @@ export const ZH_HK: SystemLangMap = {
   "PC.Pages.AntvX6Params.operatorNotEqual": "不等於",
   "PC.Pages.AntvX6Params.operatorNotIn": "不屬於",
   "PC.Pages.AntvX6Params.operatorNotNull": "不為空",
+  "PC.Pages.AntvX6Params.operatorLike": "模糊匹配",
+  "PC.Pages.AntvX6Params.operatorNotLike": "模糊不匹配",
   "PC.Pages.AntvX6Params.paramName": "參數名",
   "PC.Pages.AntvX6Params.paramNameRequired": "請輸入參數名",
   "PC.Pages.AntvX6Params.paramValue": "參數值",

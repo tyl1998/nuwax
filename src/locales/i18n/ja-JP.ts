@@ -1895,6 +1895,8 @@ export const JA_JP: SystemLangMap = {
   "PC.Pages.AntvX6Params.operatorNotEqual": "等しくない",
   "PC.Pages.AntvX6Params.operatorNotIn": "入っていない",
   "PC.Pages.AntvX6Params.operatorNotNull": "Null ではありません",
+  "PC.Pages.AntvX6Params.operatorLike": "部分一致",
+  "PC.Pages.AntvX6Params.operatorNotLike": "部分不一致",
   "PC.Pages.AntvX6Params.paramName": "パラメータ名",
   "PC.Pages.AntvX6Params.paramNameRequired": "パラメータ名を入力してください",
   "PC.Pages.AntvX6Params.paramValue": "パラメータ値",

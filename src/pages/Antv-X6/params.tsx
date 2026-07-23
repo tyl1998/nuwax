@@ -699,6 +699,16 @@ export const options = [
     value: 'NOT_NULL',
     displayValue: '!∅',
   },
+  {
+    label: t('PC.Pages.AntvX6Params.operatorLike'),
+    value: 'LIKE',
+    displayValue: '~',
+  },
+  {
+    label: t('PC.Pages.AntvX6Params.operatorNotLike'),
+    value: 'NOT_LIKE',
+    displayValue: '!~',
+  },
 ];
 
 export const tableOptions = [
@@ -751,5 +761,15 @@ export const tableOptions = [
     label: t('PC.Pages.AntvX6Params.operatorNotNull'),
     value: 'NOT_NULL',
     displayValue: '!∅',
+  },
+  {
+    label: t('PC.Pages.AntvX6Params.operatorLike'),
+    value: 'LIKE',
+    displayValue: '~',
+  },
+  {
+    label: t('PC.Pages.AntvX6Params.operatorNotLike'),
+    value: 'NOT_LIKE',
+    displayValue: '!~',
   },
 ];

@@ -1913,6 +1913,8 @@ export const ZH_TW: SystemLangMap = {
   "PC.Pages.AntvX6Params.operatorNotEqual": "不等於",
   "PC.Pages.AntvX6Params.operatorNotIn": "不屬於",
   "PC.Pages.AntvX6Params.operatorNotNull": "不為空",
+  "PC.Pages.AntvX6Params.operatorLike": "模糊匹配",
+  "PC.Pages.AntvX6Params.operatorNotLike": "模糊不匹配",
   "PC.Pages.AntvX6Params.paramName": "引數名",
   "PC.Pages.AntvX6Params.paramNameRequired": "請輸入引數名",
   "PC.Pages.AntvX6Params.paramValue": "引數值",

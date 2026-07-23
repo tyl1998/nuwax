@@ -1916,6 +1916,8 @@ export const ZH_CN: SystemLangMap = {
   "PC.Pages.AntvX6Params.operatorNotEqual": "不等于",
   "PC.Pages.AntvX6Params.operatorNotIn": "不属于",
   "PC.Pages.AntvX6Params.operatorNotNull": "不为空",
+  "PC.Pages.AntvX6Params.operatorLike": "模糊匹配",
+  "PC.Pages.AntvX6Params.operatorNotLike": "模糊不匹配",
   "PC.Pages.AntvX6Params.paramName": "参数名",
   "PC.Pages.AntvX6Params.paramNameRequired": "请输入参数名",
   "PC.Pages.AntvX6Params.paramValue": "参数值",

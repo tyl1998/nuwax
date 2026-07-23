@@ -1916,6 +1916,8 @@ export const EN_US: SystemLangMap = {
   "PC.Pages.AntvX6Params.operatorNotEqual": "Not Equals",
   "PC.Pages.AntvX6Params.operatorNotIn": "Not In",
   "PC.Pages.AntvX6Params.operatorNotNull": "Not Null",
+  "PC.Pages.AntvX6Params.operatorLike": "Like",
+  "PC.Pages.AntvX6Params.operatorNotLike": "Not Like",
   "PC.Pages.AntvX6Params.paramName": "Parameter Name",
   "PC.Pages.AntvX6Params.paramNameRequired": "Please enter parameter name",
   "PC.Pages.AntvX6Params.paramValue": "Parameter Value",

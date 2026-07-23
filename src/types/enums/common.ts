@@ -205,6 +205,8 @@ export enum CompareTypeEnum {
   MATCH_REGEX = 'MATCH_REGEX',
   IS_NULL = 'IS_NULL',
   NOT_NULL = 'NOT_NULL',
+  LIKE = 'LIKE',
+  NOT_LIKE = 'NOT_LIKE',
 }
 
 export enum AnswerTypeEnum {

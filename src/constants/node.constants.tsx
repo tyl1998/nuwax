@@ -89,6 +89,8 @@ export const compareTypeMap = {
   [CompareTypeEnum.MATCH_REGEX]: '~',
   [CompareTypeEnum.IS_NULL]: '∅',
   [CompareTypeEnum.NOT_NULL]: '!∅',
+  [CompareTypeEnum.LIKE]: '~',
+  [CompareTypeEnum.NOT_LIKE]: '!~',
 };
 
 export const answerTypeMap = {
